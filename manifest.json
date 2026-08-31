@@ -1,0 +1,25 @@
+{
+  "name": "Melbourne Trip Planner",
+  "short_name": "Melbourne Trip",
+  "description": "Melbourne family trip itinerary, hotels, bookings, expenses and checklists.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f1ede2",
+  "theme_color": "#2e4034",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%232e4034'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Georgia,serif' fill='%23f1ede2' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%232e4034'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Georgia,serif' fill='%23f1ede2' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
