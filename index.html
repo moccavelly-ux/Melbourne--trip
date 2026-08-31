@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Melbourne Trip</title>
+<!-- iOS "Add to Home Screen" metadata -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Melbourne Trip">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#2e4034">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%232e4034'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Georgia,serif' fill='%23f1ede2' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<!-- Optional web fonts: enhance styling when online, app fully works offline via the system-font fallbacks in the CSS below -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c2321;
+  --ink-soft:#3a423e;
+  --paper:#f1ede2;
+  --paper-2:#e8e1cd;
+  --card:#fbf9f3;
+  --green:#2e4034;
+  --green-light:#4f6657;
+  --green-pale:#dfe6df;
+  --rust:#a8622e;
+  --rust-light:#c98356;
+  --rust-pale:#f0ddc9;
+  --line:#cbc3ab;
+  --white:#ffffff;
+  --red:#9c3b3b;
+  --amber:#a67c26;
+  --radius:16px;
+  --shadow:0 1px 2px rgba(28,35,33,0.06), 0 4px 16px rgba(28,35,33,0.06);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:78px;
+  min-height:100vh;
+}
+::selection{background:var(--rust-pale);}
+h1,h2,h3,.display{font-family:'Fraunces',serif;letter-spacing:-0.01em;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+button{font-family:inherit;}
+a{color:inherit;}
+
+/* ---------- Top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:20;
+  background:linear-gradient(180deg, var(--paper) 80%, transparent);
+  padding:18px 20px 10px;
+}
+.topbar-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-badge{
+  width:38px;height:38px;border-radius:10px;
+  background:var(--green);color:var(--paper);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',serif;font-weight:600;font-size:17px;
+  box-shadow:var(--shadow);
+  flex-shrink:0;
+}
+.brand-text .eyebrow{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--green-light);font-weight:600;}
+.brand-text .title{font-size:19px;font-weight:600;line-height:1.1;}
+.search-btn{
+  width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
+  background:var(--card);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--ink);
+}
+
+/* ---------- Main container ---------- */
+#app{padding:6px 20px 40px;max-width:640px;margin:0 auto;}
+
+/* ---------- Cards ---------- */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px;
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
+}
+.card-title{
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--green-light);font-weight:600;margin:0 0 10px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.card-title .link{font-size:11px;letter-spacing:.04em;text-transform:none;color:var(--rust);cursor:pointer;font-weight:600;}
+
+/* ---------- Hero / countdown ---------- */
+.hero{
+  background:var(--green);color:var(--paper);
+  border-radius:20px;padding:22px 20px;margin-bottom:16px;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.hero::after{
+  content:"";position:absolute;right:-30px;bottom:-40px;width:160px;height:160px;
+  border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.08),transparent 70%);
+}
+.hero-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust-light);font-weight:600;}
+.hero-count{font-family:'Fraunces',serif;font-size:42px;font-weight:600;line-height:1;margin:8px 0 2px;}
+.hero-sub{font-size:13.5px;color:#d8ded9;}
+.hero-meta{display:flex;gap:18px;margin-top:14px;font-size:12.5px;color:#cdd6cf;flex-wrap:wrap;}
+.hero-meta b{color:var(--paper);font-weight:600;}
+
+/* ---------- Quick access grid ---------- */
+.qgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.qbtn{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:12px 6px;text-align:center;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.qbtn .ic{font-size:19px;}
+.qbtn .lb{font-size:10.5px;font-weight:600;color:var(--ink-soft);letter-spacing:.01em;}
+
+/* summary strip */
+.sumgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.sumcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;}
+.sumcard .n{font-family:'Fraunces',serif;font-size:20px;font-weight:600;}
+.sumcard .l{font-size:10.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
+
+/* ---------- List rows ---------- */
+.row{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 0;border-bottom:1px solid var(--line);
+}
+.row:last-child{border-bottom:none;}
+.row-time{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;
+  color:var(--green);min-width:48px;padding-top:2px;
+}
+.row-main{flex:1;min-width:0;}
+.row-title{font-weight:600;font-size:14.5px;}
+.row-sub{font-size:12.5px;color:var(--ink-soft);margin-top:2px;}
+.row-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
+
+.tag{
+  font-size:10px;font-weight:700;letter-spacing:.03em;padding:3px 8px;border-radius:20px;
+  display:inline-flex;align-items:center;gap:4px;white-space:nowrap;
+}
+.tag-must{background:var(--rust-pale);color:var(--rust);}
+.tag-high{background:#fbe9d3;color:#95591c;}
+.tag-opt{background:var(--green-pale);color:var(--green);}
+.tag-if{background:#eee9dc;color:#8a8267;}
+.tag-conf{background:var(--green-pale);color:var(--green);}
+.tag-pending{background:#fbe9d3;color:#95591c;}
+.tag-cancel{background:#f1dcdc;color:var(--red);}
+.tag-action{background:#f1dcdc;color:var(--red);}
+
+/* ---------- Buttons ---------- */
+.btn{
+  border:none;border-radius:12px;padding:12px 16px;font-weight:600;font-size:14px;
+  cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+}
+.btn-primary{background:var(--green);color:var(--paper);width:100%;}
+.btn-rust{background:var(--rust);color:#fff;}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink);}
+.btn-sm{padding:7px 12px;font-size:12.5px;border-radius:9px;}
+.btn-danger{background:transparent;color:var(--red);border:1px solid #e2c3c3;}
+.btn:active{transform:scale(0.98);}
+.btn-block{width:100%;}
+
+/* ---------- Empty state ---------- */
+.empty{
+  text-align:center;padding:34px 18px;border:1.5px dashed var(--line);border-radius:16px;
+  background:var(--card);
+}
+.empty .ic{font-size:26px;margin-bottom:8px;}
+.empty h3{margin:0 0 6px;font-size:16px;}
+.empty p{margin:0 0 16px;font-size:13px;color:var(--ink-soft);max-width:320px;margin-left:auto;margin-right:auto;}
+
+/* ---------- Section headers ---------- */
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin:22px 0 10px;}
+.sec-head h2{font-size:20px;margin:0;font-weight:600;}
+.sec-sub{font-size:12.5px;color:var(--ink-soft);margin-top:-6px;margin-bottom:14px;}
+
+/* ---------- Tabs (segmented) ---------- */
+.segmented{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px;scrollbar-width:none;}
+.segmented::-webkit-scrollbar{display:none;}
+.seg-btn{
+  flex-shrink:0;padding:8px 14px;border-radius:20px;border:1px solid var(--line);
+  background:var(--card);font-size:12.5px;font-weight:600;color:var(--ink-soft);cursor:pointer;
+}
+.seg-btn.active{background:var(--green);border-color:var(--green);color:var(--paper);}
+
+/* ---------- Day / tram-line timeline (signature element) ---------- */
+.day-card{margin-bottom:16px;}
+.day-head{display:flex;align-items:center;gap:12px;margin-bottom:4px;cursor:pointer;}
+.day-badge{
+  width:40px;height:40px;border-radius:50%;background:var(--green);color:var(--paper);
+  display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;
+  font-weight:600;font-size:13px;flex-shrink:0;
+}
+.day-head-text{flex:1;min-width:0;}
+.day-head-text .d{font-size:11px;color:var(--ink-soft);font-weight:600;letter-spacing:.03em;}
+.day-head-text .t{font-family:'Fraunces',serif;font-size:17px;font-weight:600;}
+.day-chev{color:var(--ink-soft);font-size:13px;transition:transform .15s;}
+.day-chev.open{transform:rotate(90deg);}
+
+.tram-line{position:relative;padding-left:34px;margin-top:14px;}
+.tram-line::before{
+  content:"";position:absolute;left:9px;top:4px;bottom:4px;width:2px;
+  background:repeating-linear-gradient(var(--green-light),var(--green-light) 6px, transparent 6px, transparent 11px);
+}
+.stop{position:relative;padding-bottom:18px;}
+.stop:last-child{padding-bottom:0;}
+.stop::before{
+  content:"";position:absolute;left:-34px;top:2px;width:11px;height:11px;border-radius:50%;
+  background:var(--rust);border:2px solid var(--paper);box-shadow:0 0 0 1.5px var(--rust);
+}
+.stop.done::before{background:var(--green);box-shadow:0 0 0 1.5px var(--green);}
+.stop-time{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--green);font-weight:600;}
+.stop-title{font-weight:600;font-size:14.5px;margin-top:2px;}
+.stop-meta{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+.stop-actions{display:flex;gap:8px;margin-top:8px;}
+.stop-actions span{font-size:11.5px;color:var(--rust);font-weight:600;cursor:pointer;}
+
+/* ---------- Modal ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(20,24,22,0.42);z-index:100;
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .18s;
+}
+.overlay.show{opacity:1;pointer-events:auto;}
+.sheet{
+  background:var(--paper);width:100%;max-width:640px;max-height:88vh;overflow-y:auto;
+  border-radius:22px 22px 0 0;padding:18px 20px 28px;
+  transform:translateY(16px);transition:transform .18s;
+  box-shadow:0 -8px 30px rgba(0,0,0,0.15);
+}
+.overlay.show .sheet{transform:translateY(0);}
+.sheet-handle{width:36px;height:4px;background:var(--line);border-radius:4px;margin:0 auto 14px;}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.sheet-head h3{margin:0;font-size:18px;}
+.sheet-close{width:30px;height:30px;border-radius:50%;background:var(--card);border:1px solid var(--line);cursor:pointer;font-size:15px;color:var(--ink-soft);}
+
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:11.5px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;}
+.field input, .field select, .field textarea{
+  width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);
+  background:var(--card);font-size:14.5px;color:var(--ink);font-family:inherit;
+}
+.field textarea{resize:vertical;min-height:60px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.chip-select{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{
+  padding:8px 12px;border-radius:20px;border:1px solid var(--line);background:var(--card);
+  font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ink-soft);
+}
+.chip.sel{background:var(--green);border-color:var(--green);color:var(--paper);}
+
+/* ---------- Bottom nav ---------- */
+.bottomnav{
+  position:fixed;bottom:0;left:0;right:0;z-index:50;
+  background:var(--card);border-top:1px solid var(--line);
+  display:flex;justify-content:space-around;padding:8px 4px 14px;
+  box-shadow:0 -2px 12px rgba(0,0,0,0.05);
+}
+.navbtn{
+  background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;
+  color:var(--ink-soft);cursor:pointer;padding:6px 4px;flex:1;
+}
+.navbtn .ic{font-size:19px;}
+.navbtn .lb{font-size:10px;font-weight:600;}
+.navbtn.active{color:var(--green);}
+
+/* ---------- FAB ---------- */
+.fab{
+  position:fixed;right:18px;bottom:88px;z-index:60;
+  width:56px;height:56px;border-radius:50%;background:var(--rust);color:#fff;
+  border:none;font-size:26px;box-shadow:0 6px 18px rgba(168,98,46,0.4);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* progress bar */
+.progress{height:8px;border-radius:6px;background:var(--paper-2);overflow:hidden;margin-top:8px;}
+.progress > div{height:100%;background:var(--green);border-radius:6px;transition:width .3s;}
+.progress.rust > div{background:var(--rust);}
+
+/* bar chart */
+.barrow{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.barrow .lb{font-size:12px;color:var(--ink-soft);width:88px;flex-shrink:0;}
+.barrow .track{flex:1;height:10px;background:var(--paper-2);border-radius:6px;overflow:hidden;}
+.barrow .track>div{height:100%;background:var(--rust);border-radius:6px;}
+.barrow .val{font-size:12px;font-family:'IBM Plex Mono',monospace;width:64px;text-align:right;flex-shrink:0;}
+
+.copybtn{
+  border:1px solid var(--line);background:var(--card);border-radius:8px;padding:5px 10px;
+  font-size:11.5px;font-weight:600;cursor:pointer;color:var(--green);display:inline-flex;gap:5px;align-items:center;
+}
+.demo-flag{
+  font-size:10px;font-weight:700;background:var(--rust-pale);color:var(--rust);padding:2px 7px;border-radius:8px;margin-left:6px;
+}
+.muted{color:var(--ink-soft);}
+.checkrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);}
+.checkrow:last-child{border-bottom:none;}
+.checkbox{
+  width:22px;height:22px;border-radius:7px;border:1.5px solid var(--line);flex-shrink:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;background:var(--card);
+}
+.checkbox.done{background:var(--green);border-color:var(--green);}
+.checkrow-text{flex:1;font-size:14px;}
+.checkrow-text.done{text-decoration:line-through;color:var(--ink-soft);}
+.del-x{color:var(--ink-soft);cursor:pointer;font-size:15px;padding:4px;}
+.toast{
+  position:fixed;top:14px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);
+  padding:10px 18px;border-radius:30px;font-size:13px;font-weight:600;z-index:200;box-shadow:var(--shadow);
+  opacity:0;pointer-events:none;transition:opacity .2s, top .2s;
+}
+.toast.show{opacity:1;top:22px;}
+.hint{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+.save-status{
+  font-size:10.5px;font-weight:700;letter-spacing:.02em;padding:6px 10px;border-radius:20px;cursor:pointer;
+  white-space:nowrap;border:1px solid var(--line);background:var(--card);color:var(--green-light);
+  transition:background .15s,color .15s,border-color .15s;
+}
+.save-status.saving{color:var(--amber);border-color:#e6d4a8;background:#fbf6e8;}
+.save-status.error{color:var(--red);border-color:#e2c3c3;background:#fbeaea;}
+.storage-banner{
+  background:#fbeaea;border:1px solid #e2c3c3;color:var(--red);border-radius:16px;
+  padding:14px 16px;margin-bottom:14px;font-size:13px;line-height:1.5;
+}
+.storage-banner b{display:block;margin-bottom:4px;font-size:14px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-row">
+    <div class="brand">
+      <div class="brand-badge">M</div>
+      <div class="brand-text">
+        <div class="eyebrow">Family Trip</div>
+        <div class="title">Melbourne</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div id="save-status" class="save-status" onclick="showStorageInfo()">✓ Saved</div>
+      <button class="search-btn" onclick="openSearch()">⌕</button>
+    </div>
+  </div>
+</div>
+
+<div id="app"></div>
+
+<button class="fab" onclick="openQuickAdd()">＋</button>
+
+<div class="bottomnav">
+  <button class="navbtn" data-tab="dashboard" onclick="setTab('dashboard')"><span class="ic">🏠</span><span class="lb">Dashboard</span></button>
+  <button class="navbtn" data-tab="itinerary" onclick="setTab('itinerary')"><span class="ic">🗓️</span><span class="lb">Itinerary</span></button>
+  <button class="navbtn" data-tab="expenses" onclick="setTab('expenses')"><span class="ic">💰</span><span class="lb">Expenses</span></button>
+  <button class="navbtn" data-tab="bookings" onclick="setTab('bookings')"><span class="ic">🎟️</span><span class="lb">Bookings</span></button>
+  <button class="navbtn" data-tab="checklists" onclick="setTab('checklists')"><span class="ic">☑️</span><span class="lb">Checklists</span></button>
+  <button class="navbtn" data-tab="more" onclick="setTab('more')"><span class="ic">⚙️</span><span class="lb">More</span></button>
+</div>
+
+<div class="overlay" id="overlay"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   MELBOURNE TRIP — STATE
+   ========================================================= */
+const STORAGE_KEY = 'trip-data';
+let state = null;
+let currentTab = 'dashboard';
+let openDayId = null;
+
+function uid(){ return Math.random().toString(36).slice(2,9); }
+
+function realTripData(){
+  return {
+    isDemo:false,
+    trip:{ name:'Melbourne Family Trip', startDate:'2026-09-03', endDate:'2026-09-10', travelers:'', budget:'', notes:'Great Ocean Road loop (Apollo Bay / Port Campbell) between two Melbourne CBD stays. Avoid unnecessary hotel changes — only one hotel change during the GOR portion. Do not overpack the itinerary; keep reasonable rest/buffer time.' },
+    flights:[
+      {id:uid(), airline:'', flightNo:'', date:'2026-09-03', from:'SYD', to:'MEL', depTime:'', arrTime:'', terminal:'', bookingRef:'', price:'', bags:'', seats:'', checkedIn:false, notes:'Flight time and details not yet provided'},
+      {id:uid(), airline:'', flightNo:'', date:'2026-09-10', from:'MEL', to:'SYD', depTime:'', arrTime:'', terminal:'', bookingRef:'', price:'', bags:'', seats:'', checkedIn:false, notes:'Flight time and details not yet provided'}
+    ],
+    hotels:[
+      {id:uid(), name:'NOT YET PROVIDED', address:'', mapsLink:'', bookingLink:'', bookingRef:'', checkIn:'2026-09-03', checkInTime:'', checkOut:'2026-09-04', checkOutTime:'', nights:1, roomType:'', guests:'', price:'', currency:'AUD', paymentStatus:'', deposit:'', breakfast:'', parking:'', cancellation:'', instructions:'', notes:'Melbourne CBD, 1 night before heading to the Great Ocean Road. Hotel name not yet provided — may or may not be the same property as the 7–10 Sep Melbourne stay (not confirmed either way).'},
+      {id:uid(), name:'Waterfront Motor Inn', address:'Apollo Bay VIC', mapsLink:'', bookingLink:'', bookingRef:'', checkIn:'2026-09-04', checkInTime:'', checkOut:'2026-09-06', checkOutTime:'', nights:2, roomType:'', guests:'', price:'', currency:'AUD', paymentStatus:'', deposit:'', breakfast:'', parking:'', cancellation:'', instructions:'', notes:'Confirmed accommodation for the Apollo Bay leg.'},
+      {id:uid(), name:'NOT YET PROVIDED', address:'Port Campbell VIC', mapsLink:'', bookingLink:'', bookingRef:'', checkIn:'2026-09-06', checkInTime:'', checkOut:'2026-09-07', checkOutTime:'', nights:1, roomType:'', guests:'', price:'', currency:'AUD', paymentStatus:'', deposit:'', breakfast:'', parking:'', cancellation:'', instructions:'', notes:'Port Campbell base for Twelve Apostles sunset night. Hotel name not yet provided.'},
+      {id:uid(), name:'NOT YET PROVIDED', address:'', mapsLink:'', bookingLink:'', bookingRef:'', checkIn:'2026-09-07', checkInTime:'', checkOut:'2026-09-10', checkOutTime:'', nights:3, roomType:'', guests:'', price:'', currency:'AUD', paymentStatus:'', deposit:'', breakfast:'', parking:'', cancellation:'', instructions:'', notes:'Melbourne CBD, 3 nights after the Great Ocean Road loop, until departure. Hotel name not yet provided — may or may not be the same property as the 3–4 Sep Melbourne stay (not confirmed either way).'}
+    ],
+    rentalCar:{ company:'', vehicle:'', category:'', pickupLocation:'NOT YET PROVIDED', pickupDate:'2026-09-04', pickupTime:'', returnLocation:'NOT YET PROVIDED', returnDate:'2026-09-07', returnTime:'', bookingRef:'', price:'', deposit:'', insurance:'', excess:'', fuelPolicy:'', km:'', notes:'For the Great Ocean Road portion only (4–7 Sep) — not used for the Melbourne CBD stays before or after.' },
+    itineraryDays:[
+      { id:uid(), date:'2026-09-03', title:'Arrival — Sydney to Melbourne', area:'Melbourne CBD', notes:'Base: Melbourne CBD, 1 night (3–4 Sep). Hotel name not yet provided.', items:[
+        {id:uid(), time:'', endTime:'', activity:'Flight Sydney → Melbourne', location:'', address:'', category:'Flight', priority:'must', transport:'Flight', duration:'', cost:'', booking:'', status:'planned', notes:'Flight time not yet provided'},
+        {id:uid(), time:'', endTime:'', activity:'Check in — Melbourne CBD (1 night)', location:'Melbourne CBD', address:'', category:'Hotel', priority:'must', transport:'', duration:'', cost:'', booking:'', status:'planned', notes:'Hotel name not yet provided'}
+      ]},
+      { id:uid(), date:'2026-09-04', title:'Great Ocean Road to Apollo Bay', area:'Great Ocean Road', notes:'Rental car picked up today, for the GOR portion only (4–7 Sep). Base: Waterfront Motor Inn, Apollo Bay, 2 nights.', items:[
+        {id:uid(), time:'', endTime:'', activity:'Rental car pick-up', location:'NOT YET PROVIDED', address:'', category:'Rental Car', priority:'must', transport:'', duration:'', cost:'', booking:'', status:'planned', notes:'For Great Ocean Road portion only, 4–7 Sep'},
+        {id:uid(), time:'', endTime:'', activity:'Torquay', location:'Torquay', address:'', category:'Sightseeing', priority:'high', transport:'Car', duration:'', cost:'', booking:'', status:'planned', notes:''},
+        {id:uid(), time:'', endTime:'', activity:'Bells Beach', location:'Bells Beach', address:'', category:'Sightseeing', priority:'high', transport:'Car', duration:'', cost:'', booking:'', status:'planned', notes:''},
+        {id:uid(), time:'', endTime:'', activity:'Great Ocean Road Memorial Arch', location:'Great Ocean Road Memorial Arch', address:'', category:'Sightseeing', priority:'high', transport:'Car', duration:'', cost:'', booking:'', status:'planned', notes:''},
+        {id:uid(), time:'', endTime:'', activity:'Lorne', location:'Lorne', address:'', category:'Sightseeing', priority:'high', transport:'Car', duration:'', cost:'', booking:'', status:'planned', notes:''},
+        {id:uid(), time:'', endTime:'', activity:'Check in — Waterfront Motor Inn (2 nights)', location:'Apollo Bay', address:'', category:'Hotel', priority:'must', transport:'', duration:'', cost:'', booking:'', status:'planned', notes:'Confirmed accommodation'}
+      ]},
+      { id:uid(), date:'2026-09-05', title:'Apollo Bay & Rainforest', area:'Apollo Bay', notes:'Rest/buffer built into the day — keep the pace relaxed.', items:[
+        {id:uid(), time:'', endTime:'', activity:'Maits Rest', location:'Maits Rest', address:'', category:'Sightseeing', priority:'high', transport:'Car', duration:'', cost:'', booking:'', status:'planned', notes:''},
+        {id:uid(), time:'', endTime:'', activity:'Redwood Forest', location:'Great Otway National Park', address:'', category:'Sightseeing', priority:'opt', transport:'Car', duration:'', cost:'', booking:'', status:'planned', notes:'Optional — only if time allows'},
+        {id:uid(), time:'', endTime:'', activity:'Return to Apollo Bay — rest time', location:'Apollo Bay', address:'', category:'Rest', priority:'if', transport:'', duration:'', cost:'', booking:'', status:'planned', notes:'Buffer/rest period'}
+      ]},
+      { id:uid(), date:'2026-09-06', title:'Twelve Apostles & Coastline to Port Campbell', area:'Great Ocean Road', notes:'🟡 Twelve Apostles Golden Hour / Sunset is the priority objective for today. Sunset time to be verified closer to 6 Sep 2026 — not hard-coded as confirmed. Hotel name for Port Campbell not yet provided.', items:[
+        {id:uid(), time:'', endTime:'', activity:'Gibson Steps', location:'Gibson Steps', address:'', category:'Sightseeing', priority:'high', transport:'Car', duration:'', cost:'', booking:'', status:'planned', notes:''},
+        {id:uid(), time:'', endTime:'', activity:'Twelve Apostles (day visit)', location:'Twelve Apostles', address:'', category:'Sightseeing', priority:'must', transport:'Car', duration:'', cost:'', booking:'', status:'planned', notes:''},
+        {id:uid(), time:'', endTime:'', activity:'Loch Ard Gorge', location:'Loch Ard Gorge', address:'', category:'Sightseeing', priority:'high', transport:'Car', duration:'', cost:'', booking:'', status:'planned', notes:''},
+        {id:uid(), time:'', endTime:'', activity:'The Arch', location:'The Arch', address:'', category:'Sightseeing', priority:'high', transport:'Car', duration:'', cost:'', booking:'', status:'planned', notes:''},
+        {id:uid(), time:'', endTime:'', activity:'London Bridge', location:'London Bridge', address:'', category:'Sightseeing', priority:'high', transport:'Car', duration:'', cost:'', booking:'', status:'planned', notes:''},
+        {id:uid(), time:'', endTime:'', activity:'Twelve Apostles — Golden Hour / Sunset', location:'Twelve Apostles', address:'', category:'Sightseeing', priority:'must', transport:'Car', duration:'', cost:'', booking:'', status:'planned', notes:'🟡 Priority objective for today. Exact sunset time to be verified closer to 6 Sep 2026 — not yet confirmed.'},
+        {id:uid(), time:'', endTime:'', activity:'Check in — Port Campbell (1 night)', location:'Port Campbell', address:'', category:'Hotel', priority:'must', transport:'', duration:'', cost:'', booking:'', status:'planned', notes:'Hotel name not yet provided'}
+      ]},
+      { id:uid(), date:'2026-09-07', title:'Port Campbell to Melbourne (inland route)', area:'Melbourne CBD', notes:'Rental car returned today, end of GOR portion. Base: Melbourne CBD, 3 nights (7–10 Sep).', items:[
+        {id:uid(), time:'', endTime:'', activity:'Drive Port Campbell → Melbourne (inland route)', location:'', address:'', category:'Transport', priority:'must', transport:'Car', duration:'', cost:'', booking:'', status:'planned', notes:''},
+        {id:uid(), time:'', endTime:'', activity:'Rental car return', location:'NOT YET PROVIDED', address:'', category:'Rental Car', priority:'must', transport:'', duration:'', cost:'', booking:'', status:'planned', notes:'End of GOR rental period (4–7 Sep)'},
+        {id:uid(), time:'', endTime:'', activity:'Check in — Melbourne CBD (3 nights)', location:'Melbourne CBD', address:'', category:'Hotel', priority:'must', transport:'', duration:'', cost:'', booking:'', status:'planned', notes:'Hotel name not yet provided'}
+      ]},
+      { id:uid(), date:'2026-09-08', title:'Geelong & Bellarine Peninsula', area:'Geelong', notes:'🟡 Transport to Geelong not yet decided — V/Line train vs rental car. Preserve as a pending decision, not confirmed either way.', items:[
+        {id:uid(), time:'', endTime:'', activity:'Melbourne → Geelong', location:'Geelong', address:'', category:'Transport', priority:'high', transport:'🟡 V/Line train vs rental car — TO BE DECIDED', duration:'', cost:'', booking:'', status:'planned', notes:'Decision pending, not confirmed'},
+        {id:uid(), time:'', endTime:'', activity:'Barwon Heads OR Point Lonsdale', location:'Barwon Heads / Point Lonsdale', address:'', category:'Sightseeing', priority:'opt', transport:'', duration:'', cost:'', booking:'', status:'planned', notes:'Choice between the two not yet decided'},
+        {id:uid(), time:'', endTime:'', activity:'Geelong → Melbourne', location:'Melbourne', address:'', category:'Transport', priority:'high', transport:'🟡 V/Line train vs rental car — TO BE DECIDED', duration:'', cost:'', booking:'', status:'planned', notes:'Decision pending, not confirmed'}
+      ]},
+      { id:uid(), date:'2026-09-09', title:'Melbourne — slow day', area:'Melbourne CBD', notes:'Intentionally unstructured rest day — do not overpack.', items:[
+        {id:uid(), time:'', endTime:'', activity:'Slow day — no fixed plan', location:'Melbourne CBD', address:'', category:'Rest', priority:'if', transport:'', duration:'', cost:'', booking:'', status:'planned', notes:'Intentional rest day per trip notes'}
+      ]},
+      { id:uid(), date:'2026-09-10', title:'Departure — Melbourne to Sydney', area:'Melbourne CBD', notes:'Departure day.', items:[
+        {id:uid(), time:'', endTime:'', activity:'Flight Melbourne → Sydney', location:'', address:'', category:'Flight', priority:'must', transport:'Flight', duration:'', cost:'', booking:'', status:'planned', notes:'Flight time not yet provided'}
+      ]}
+    ],
+    bookings:[],
+    expenses:[],
+    checklists:{
+      'Before Flight':[ {id:uid(),text:'Check passports valid 6+ months',done:false}, {id:uid(),text:'Check flight check-in opens',done:false} ],
+      'Hotel':[ {id:uid(),text:'Confirm Melbourne CBD hotel names once booked',done:false}, {id:uid(),text:'Confirm Port Campbell accommodation once booked',done:false} ],
+      'Rental Car':[ {id:uid(),text:'Confirm rental car pickup/return location',done:false}, {id:uid(),text:'Bring driving licence',done:false} ],
+      'Packing':[ {id:uid(),text:'Chargers packed',done:false} ],
+      'Important':[ {id:uid(),text:'Decide Geelong transport: V/Line train vs rental car',done:false}, {id:uid(),text:'Check Twelve Apostles sunset time closer to 6 Sep',done:false} ],
+      'Before Leaving Home':[ {id:uid(),text:'Set out-of-office',done:false} ],
+      'Return Home':[ {id:uid(),text:'Confirm airport transfer home',done:false} ]
+    },
+    packing:{
+      'Documents':[ {id:uid(),text:'Passports',packed:false} ],
+      'Clothing':[ {id:uid(),text:'Warm layer for coastal evenings',packed:false} ],
+      'Toiletries':[], 'Beauty':[],
+      'Electronics':[ {id:uid(),text:'Chargers',packed:false}, {id:uid(),text:'Camera for Twelve Apostles sunset',packed:false} ],
+      'Medicine / Personal':[],
+      'Travel Accessories':[ {id:uid(),text:'Reusable water bottles',packed:false} ],
+      'Miscellaneous':[]
+    },
+    notes:[
+      {id:uid(), title:'Hotel change policy', content:'Avoid unnecessary hotel changes — only one hotel change during the Great Ocean Road portion after leaving Melbourne.', category:'Important', date:'2026-09-03', day:''},
+      {id:uid(), title:'Rental car scope', content:'Rental car is only intended for the Great Ocean Road portion (4–7 Sep), not the full Melbourne stay.', category:'Driving', date:'2026-09-04', day:''},
+      {id:uid(), title:'Geelong transport pending', content:'8 September transport to Geelong is not yet confirmed — V/Line train vs rental car.', category:'Important', date:'2026-09-08', day:''},
+      {id:uid(), title:'Twelve Apostles sunset priority', content:'6 September sunset at the Twelve Apostles is a priority for the trip. Exact time to be verified closer to the date.', category:'Places', date:'2026-09-06', day:''}
+    ]
+  };
+}
+function demoData(){
+  return {
+    isDemo:true,
+    trip:{ name:'Melbourne Family Trip', startDate:'2026-12-10', endDate:'2026-12-17', travelers:4, budget:6000, notes:'Sample trip — replace with your real dates and details.' },
+    flights:[
+      {id:uid(), demo:true, airline:'Qantas', flightNo:'QF409', date:'2026-12-10', from:'SYD', to:'MEL', depTime:'07:15', arrTime:'08:40', terminal:'T3', bookingRef:'ABCD12', price:'', bags:'', seats:'', checkedIn:false, notes:''}
+    ],
+    hotels:[
+      {id:uid(), demo:true, name:'Sample Hotel Melbourne CBD', address:'123 Collins St, Melbourne VIC', mapsLink:'', bookingLink:'', bookingRef:'HTL-9F2X', checkIn:'2026-12-10', checkInTime:'15:00', checkOut:'2026-12-14', checkOutTime:'11:00', nights:4, roomType:'Family Room', guests:4, price:1240, currency:'AUD', paymentStatus:'Paid', deposit:'', breakfast:'Included', parking:'Valet, $35/night', cancellation:'Free until Dec 3', instructions:'', notes:'Sample data — edit or delete.'}
+    ],
+    rentalCar:{ demo:true, company:'Sample Rentals', vehicle:'Toyota RAV4 or similar', category:'SUV', pickupLocation:'Melbourne Airport', pickupDate:'2026-12-14', pickupTime:'12:00', returnLocation:'Melbourne Airport', returnDate:'2026-12-17', returnTime:'10:00', bookingRef:'CAR-771K', price:320, deposit:500, insurance:'Included excess reduction', excess:'$300', fuelPolicy:'Full to full', km:'Unlimited', notes:'' },
+    itineraryDays:[
+      { id:uid(), date:'2026-12-10', title:'Arrival & City Wander', area:'CBD', notes:'', items:[
+        {id:uid(), time:'09:30', endTime:'', activity:'Check in at hotel', location:'Sample Hotel', address:'123 Collins St', category:'Hotel', priority:'must', transport:'Taxi', duration:'', cost:0, booking:'', status:'planned', notes:''},
+        {id:uid(), time:'11:00', endTime:'', activity:'Flat white & pastries', location:'Degraves St laneway', address:'', category:'Café', priority:'high', transport:'Walk', duration:'45m', cost:20, booking:'', status:'planned', notes:'Sample — laneway café crawl'},
+        {id:uid(), time:'14:00', endTime:'', activity:'Federation Square + NGV', location:'Federation Square', address:'', category:'Sightseeing', priority:'opt', transport:'Tram', duration:'2h', cost:0, booking:'', status:'planned', notes:''}
+      ]}
+    ],
+    bookings:[
+      {id:uid(), demo:true, type:'Flight', name:'QF409 SYD–MEL', date:'2026-12-10', time:'07:15', location:'Sydney Airport', bookingNo:'ABCD12', confNo:'', price:'', paymentStatus:'confirmed', website:'', instructions:'', notes:''},
+      {id:uid(), demo:true, type:'Hotel', name:'Sample Hotel Melbourne CBD', date:'2026-12-10', time:'15:00', location:'Collins St', bookingNo:'HTL-9F2X', confNo:'', price:1240, paymentStatus:'confirmed', website:'', instructions:'', notes:''}
+    ],
+    expenses:[
+      {id:uid(), demo:true, amount:20, currency:'AUD', date:'2026-12-10', category:'Café', description:'Coffee & pastries', location:'Degraves St', paidBy:'Me', method:'Card', related:'', notes:'', confirmed:true}
+    ],
+    checklists:{
+      'Before Flight':[ {id:uid(),text:'Check passports valid 6+ months',done:false}, {id:uid(),text:'Check flight check-in opens',done:false} ],
+      'Hotel':[ {id:uid(),text:'Screenshot booking confirmation',done:false} ],
+      'Rental Car':[ {id:uid(),text:'Bring driving licence',done:false} ],
+      'Packing':[ {id:uid(),text:'Chargers packed',done:false} ],
+      'Important':[ {id:uid(),text:'Travel insurance saved offline',done:false} ],
+      'Before Leaving Home':[ {id:uid(),text:'Set out-of-office',done:false} ],
+      'Return Home':[ {id:uid(),text:'Confirm airport transfer home',done:false} ]
+    },
+    packing:{
+      'Documents':[ {id:uid(),text:'Passports',packed:false}, {id:uid(),text:'Travel insurance printout',packed:false} ],
+      'Clothing':[ {id:uid(),text:'Warm layer (Melbourne weather changes fast)',packed:false} ],
+      'Toiletries':[ {id:uid(),text:'Toothbrushes',packed:false} ],
+      'Beauty':[],
+      'Electronics':[ {id:uid(),text:'Chargers',packed:false} ],
+      'Medicine / Personal':[],
+      'Travel Accessories':[ {id:uid(),text:'Reusable water bottles',packed:false} ],
+      'Miscellaneous':[]
+    },
+    notes:[
+      {id:uid(), demo:true, title:'Tram tip', content:'Free Tram Zone covers most of the CBD — sample note, edit or delete.', category:'Driving', date:'2026-12-10', day:''}
+    ]
+  };
+}
+
+function emptyData(){
+  const d = demoData();
+  return {
+    isDemo:false,
+    trip:{ name:'Melbourne Family Trip', startDate:'', endDate:'', travelers:'', budget:'', notes:'' },
+    flights:[], hotels:[], rentalCar:{}, itineraryDays:[], bookings:[], expenses:[],
+    checklists: stripDone(d.checklists),
+    packing: stripDone(d.packing),
+    notes:[]
+  };
+}
+function stripDone(obj){
+  const out = {};
+  for(const k in obj){ out[k] = obj[k].map(i=>({...i, id:uid(), done:false, packed:false})); }
+  return out;
+}
+
+let storageOK = true;       // whether localStorage actually works in this environment
+let lastSaveFailed = false; // whether the most recent write attempt failed
+function storageAvailable(){
+  try{
+    const t = '__mtp_test__';
+    localStorage.setItem(t,'1');
+    const back = localStorage.getItem(t);
+    localStorage.removeItem(t);
+    return back === '1';
+  }catch(e){ return false; }
+}
+function setSaveStatus(kind){
+  const el = document.getElementById('save-status');
+  if(!el) return;
+  el.classList.remove('saving','error');
+  if(kind==='saving'){ el.textContent='Saving…'; el.classList.add('saving'); }
+  else if(kind==='error'){ el.textContent='⚠️ Not saved'; el.classList.add('error'); }
+  else { el.textContent='✓ Saved'; }
+}
+async function loadState(){
+  storageOK = storageAvailable();
+  if(storageOK){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(raw){ state = JSON.parse(raw); return; }
+    }catch(e){
+      // stored value exists but is corrupt/unreadable — don't silently discard it, keep it recoverable
+      console.error('stored data unreadable', e);
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(raw) localStorage.setItem(STORAGE_KEY+'-recovery-'+Date.now(), raw);
+      }catch(e2){/* ignore */}
+    }
+  }
+  state = realTripData();
+  await saveState();
+}
+let saveTimer=null;
+async function saveState(){
+  clearTimeout(saveTimer);
+  setSaveStatus('saving');
+  return new Promise(resolve=>{
+    saveTimer = setTimeout(()=>{
+      try{
+        if(!storageOK) throw new Error('storage unavailable in this environment');
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        lastSaveFailed = false;
+        setSaveStatus('ok');
+      }catch(e){
+        console.error('save failed', e);
+        lastSaveFailed = true;
+        setSaveStatus('error');
+        showToast('⚠️ Not saved — tap "⚠️ Not saved" up top for why');
+      }
+      resolve();
+    }, 150);
+  });
+}
+function showStorageInfo(){
+  if(storageOK && !lastSaveFailed){
+    showSheet('💾 Storage status', `
+      <div class="hint">Your data is saving normally to this browser's local storage on this device. Nothing is sent anywhere else.</div>
+      <div class="hint" style="margin-top:10px;">Still worth backing up occasionally — use More → Backup & Data → Export.</div>
+    `);
+    return;
+  }
+  showSheet('⚠️ Changes are not being saved', `
+    <div class="hint" style="margin-bottom:10px;"><b>What's happening:</b> this browser/view is blocking local storage, so your edits only exist in memory right now — closing or reloading this page will lose them.</div>
+    <div class="hint" style="margin-bottom:10px;"><b>The most common cause:</b> viewing this file inside a preview window (like Claude's in-chat file preview, an email attachment preview, or the iOS Files app "Quick Look" preview) instead of opening it as its own page. Those previews often run the page in a locked-down mode with no storage access, even though the app itself works correctly.</div>
+    <div class="hint" style="margin-bottom:10px;"><b>The fix:</b> download <span class="mono">Melbourne_Trip_Planner.html</span> to your device, then open that saved file directly in Safari or Chrome (not through a preview/QuickLook screen). On iPhone: Files app → tap the file once to preview → Share icon → "Open in Safari" (or long-press → Open In).</div>
+    <div class="hint"><b>In the meantime:</b> avoid losing work — use More → Backup & Data → Export to download a JSON copy before you close this tab, then Import it once you're in a properly opened copy.</div>
+  `);
+}
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 1600);
+}
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+function fmtMoney(n){
+  n = Number(n)||0;
+  return '$' + n.toLocaleString(undefined,{minimumFractionDigits: n%1?2:0, maximumFractionDigits:2});
+}
+function fmtDate(d){
+  if(!d) return '';
+  const dt = new Date(d+'T00:00:00');
+  if(isNaN(dt)) return d;
+  return dt.toLocaleDateString(undefined,{weekday:'short', month:'short', day:'numeric'});
+}
+function todayStr(){
+  const t = new Date();
+  return t.toISOString().slice(0,10);
+}
+function daysUntil(dateStr){
+  if(!dateStr) return null;
+  const t = new Date(todayStr()+'T00:00:00');
+  const d = new Date(dateStr+'T00:00:00');
+  return Math.round((d-t)/86400000);
+}
+function priorityTag(p){
+  const map = {must:['tag-must','🔴 Must Do'], high:['tag-high','🟠 High'], opt:['tag-opt','🟡 Optional'], if:['tag-if','⚪ If Time']};
+  const v = map[p] || map.opt;
+  return `<span class="tag ${v[0]}">${v[1]}</span>`;
+}
+function statusTag(s){
+  const map = {confirmed:['tag-conf','✅ Confirmed'], pending:['tag-pending','🟡 Pending'], cancelled:['tag-cancel','❌ Cancelled'], action:['tag-action','⚠️ Action']};
+  const v = map[s] || map.pending;
+  return `<span class="tag ${v[0]}">${v[1]}</span>`;
+}
+function categoryIcon(c){
+  const m = {Flights:'✈️',Hotels:'🏨','Rental Car':'🚗',Petrol:'⛽',Parking:'🅿️',Toll:'🛣️','Public Transport':'🚋','Uber/Taxi':'🚕',Food:'🍜','Café':'☕',Groceries:'🛒',Attractions:'🎟️',Entertainment:'🎭',Shopping:'🛍️',Fees:'💳',Other:'🧳'};
+  return m[c] || '🧳';
+}
+function esc(s){ return (s===undefined||s===null) ? '' : String(s).replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function copyText(txt){
+  navigator.clipboard?.writeText(txt).then(()=>showToast('Copied ✓')).catch(()=>showToast('Could not copy'));
+}
+
+/* =========================================================
+   RENDER ROOT
+   ========================================================= */
+function setTab(tab){
+  currentTab = tab;
+  document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+  render();
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+function render(){
+  const app = document.getElementById('app');
+  document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active', b.dataset.tab===currentTab));
+  if(currentTab==='dashboard') app.innerHTML = renderDashboard();
+  else if(currentTab==='itinerary') app.innerHTML = renderItinerary();
+  else if(currentTab==='expenses') app.innerHTML = renderExpenses();
+  else if(currentTab==='bookings') app.innerHTML = renderBookings();
+  else if(currentTab==='checklists') app.innerHTML = renderChecklists();
+  else if(currentTab==='more') app.innerHTML = renderMore();
+  else if(currentTab==='today') app.innerHTML = renderToday();
+  else if(currentTab==='hotels') app.innerHTML = renderHotels();
+  else if(currentTab==='car') app.innerHTML = renderCar();
+  else if(currentTab==='flights') app.innerHTML = renderFlights();
+  else if(currentTab==='packing') app.innerHTML = renderPacking();
+  else if(currentTab==='notes') app.innerHTML = renderNotes();
+}
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+function tripStatusLabel(){
+  const {startDate,endDate} = state.trip;
+  if(!startDate||!endDate) return {big:'—', sub:'Add your trip dates to start the countdown'};
+  const du = daysUntil(startDate);
+  const dEnd = daysUntil(endDate);
+  if(du>0) return {big:`${du} day${du===1?'':'s'}`, sub:'until Melbourne ✈️'};
+  if(du<=0 && dEnd>=0){
+    const totalDays = Math.round((new Date(endDate)-new Date(startDate))/86400000)+1;
+    const dayN = totalDays - dEnd;
+    return {big:`Day ${dayN} of ${totalDays}`, sub:'Enjoy Melbourne!'};
+  }
+  return {big:'Trip completed 🎉', sub:'Hope Melbourne was great'};
+}
+function totalExpenses(confirmedOnly){
+  return state.expenses.filter(e=> confirmedOnly ? e.confirmed!==false : true).reduce((s,e)=>s+(Number(e.amount)||0),0);
+}
+function nextItineraryItem(){
+  const today = todayStr();
+  let best=null;
+  for(const day of state.itineraryDays){
+    if(day.date < today) continue;
+    for(const item of day.items){
+      if(day.date===today){
+        // only future times today, roughly
+      }
+      if(!best || day.date<best.day.date || (day.date===best.day.date && item.time<best.item.time)){
+        best = {day, item};
+      }
+    }
+  }
+  return best;
+}
+function renderDashboard(){
+  const status = tripStatusLabel();
+  const next = nextItineraryItem();
+  const budget = Number(state.trip.budget)||0;
+  const spent = totalExpenses(false);
+  const pct = budget ? Math.min(100, Math.round(spent/budget*100)) : 0;
+  const tasksLeft = countOutstandingTasks();
+
+  return `
+  ${(!storageOK || lastSaveFailed) ? `<div class="storage-banner" onclick="showStorageInfo()">
+    <b>⚠️ Changes aren't being saved right now</b>
+    Local storage is blocked in this view — tap here for why and how to fix it before you enter real trip data.
+  </div>` : ''}
+  ${state.isDemo ? `<div class="card" style="background:var(--rust-pale);border-color:var(--rust-light);">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+      <div><b>Sample data loaded</b><div class="hint">This is placeholder data so you can see how the app works.</div></div>
+      <button class="btn btn-sm btn-rust" onclick="clearDemoData()">Clear demo</button>
+    </div>
+  </div>` : ''}
+
+  <div class="hero">
+    <div class="hero-eyebrow">${state.trip.name || 'Melbourne Family Trip'}</div>
+    <div class="hero-count">${status.big}</div>
+    <div class="hero-sub">${status.sub}</div>
+    <div class="hero-meta">
+      <div>📅 <b>${state.trip.startDate?fmtDate(state.trip.startDate):'—'} → ${state.trip.endDate?fmtDate(state.trip.endDate):'—'}</b></div>
+      <div>👪 <b>${state.trip.travelers || '—'} travelers</b></div>
+    </div>
+  </div>
+
+  <div class="qgrid">
+    <div class="qbtn" onclick="setTab('hotels')"><div class="ic">🏨</div><div class="lb">Hotel Info</div></div>
+    <div class="qbtn" onclick="openBookingCodes()"><div class="ic">🔑</div><div class="lb">Booking Codes</div></div>
+    <div class="qbtn" onclick="setTab('car')"><div class="ic">🚗</div><div class="lb">Car Info</div></div>
+    <div class="qbtn" onclick="setTab('flights')"><div class="ic">✈️</div><div class="lb">Flight Info</div></div>
+    <div class="qbtn" onclick="setTab('expenses')"><div class="ic">💰</div><div class="lb">Expenses</div></div>
+    <div class="qbtn" onclick="setTab('today')"><div class="ic">🗓️</div><div class="lb">Today</div></div>
+    <div class="qbtn" onclick="setTab('checklists')"><div class="ic">☑️</div><div class="lb">Checklist</div></div>
+    <div class="qbtn" onclick="setTab('more')"><div class="ic">⚙️</div><div class="lb">More</div></div>
+  </div>
+
+  <div class="sumgrid">
+    <div class="sumcard"><div class="n">${state.hotels.length}</div><div class="l">Hotels</div></div>
+    <div class="sumcard"><div class="n">${state.bookings.length}</div><div class="l">Bookings</div></div>
+    <div class="sumcard"><div class="n">${tasksLeft}</div><div class="l">Tasks left</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 Next Up <span class="link" onclick="setTab('itinerary')">View all</span></div>
+    ${next ? `
+      <div class="row" style="border:none;padding:0;">
+        <div class="row-time">${next.item.time||''}</div>
+        <div class="row-main">
+          <div class="row-title">${esc(next.item.activity)}</div>
+          <div class="row-sub">📍 ${esc(next.item.location||'—')} · ${fmtDate(next.day.date)}${next.item.transport?(' · '+esc(next.item.transport)):''}</div>
+          ${next.item.notes?`<div class="row-sub">${esc(next.item.notes)}</div>`:''}
+        </div>
+      </div>` : `<div class="hint">Nothing scheduled yet — add itinerary items to see what's next.</div>`}
+  </div>
+
+  <div class="card">
+    <div class="card-title">💰 Trip Spending <span class="link" onclick="setTab('expenses')">Details</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;">
+      <div class="display" style="font-size:22px;font-weight:600;">${fmtMoney(spent)}</div>
+      <div class="muted" style="font-size:12.5px;">of ${budget?fmtMoney(budget):'no budget set'}</div>
+    </div>
+    ${budget ? `<div class="progress ${pct>=90?'rust':''}"><div style="width:${pct}%"></div></div>
+    <div class="hint">${pct}% of budget used · ${fmtMoney(Math.max(0,budget-spent))} remaining</div>` : `<div class="hint">Set a budget in More → Trip Settings.</div>`}
+  </div>
+
+  ${renderUpcomingImportant()}
+  `;
+}
+function countOutstandingTasks(){
+  let n=0;
+  for(const sec in state.checklists){ n += state.checklists[sec].filter(i=>!i.done).length; }
+  return n;
+}
+function renderUpcomingImportant(){
+  const today = todayStr();
+  const items = [];
+  state.hotels.forEach(h=>{ if(h.checkIn>=today) items.push({d:h.checkIn,label:`Check in: ${h.name}`,ic:'🏨'}); if(h.checkOut>=today) items.push({d:h.checkOut,label:`Check out: ${h.name}`,ic:'🏨'}); });
+  if(state.rentalCar && state.rentalCar.pickupDate>=today) items.push({d:state.rentalCar.pickupDate,label:`Rental car pickup: ${state.rentalCar.company||''}`,ic:'🚗'});
+  if(state.rentalCar && state.rentalCar.returnDate>=today) items.push({d:state.rentalCar.returnDate,label:`Rental car return: ${state.rentalCar.company||''}`,ic:'🚗'});
+  state.flights.forEach(f=>{ if(f.date>=today) items.push({d:f.date,label:`Flight ${f.flightNo||''} ${f.from||''}→${f.to||''}`,ic:'✈️'}); });
+  items.sort((a,b)=>a.d.localeCompare(b.d));
+  if(!items.length) return '';
+  return `<div class="card">
+    <div class="card-title">⚠️ Important Upcoming</div>
+    ${items.slice(0,5).map(i=>`
+      <div class="row">
+        <div class="row-main"><div class="row-title">${i.ic} ${esc(i.label)}</div><div class="row-sub">${fmtDate(i.d)}</div></div>
+      </div>`).join('')}
+  </div>`;
+}
+
+/* =========================================================
+   TODAY MODE
+   ========================================================= */
+function renderToday(){
+  const today = todayStr();
+  const day = state.itineraryDays.find(d=>d.date===today);
+  const bookingsToday = state.bookings.filter(b=>b.date===today);
+  const expensesToday = state.expenses.filter(e=>e.date===today);
+  const tasksToday = [];
+  for(const sec in state.checklists){ state.checklists[sec].forEach(i=>{ if(i.dueDate===today && !i.done) tasksToday.push({sec,...i}); }); }
+  const expectedCost = day ? day.items.reduce((s,i)=>s+(Number(i.cost)||0),0) : 0;
+
+  return `
+  <div class="sec-head"><h2>📅 Today</h2><span class="link" style="font-size:12.5px;color:var(--rust);font-weight:600;cursor:pointer;" onclick="setTab('dashboard')">Dashboard</span></div>
+  <div class="sec-sub">${fmtDate(today)}</div>
+
+  <div class="card">
+    <div class="card-title">Itinerary</div>
+    ${day && day.items.length ? renderTramLine(day) : `<div class="hint">Nothing scheduled.</div>`}
+  </div>
+
+  <div class="card">
+    <div class="card-title">Bookings today</div>
+    ${bookingsToday.length ? bookingsToday.map(b=>`
+      <div class="row"><div class="row-main"><div class="row-title">${esc(b.name)}</div><div class="row-sub">${b.time||''} · ${esc(b.location||'')}</div></div><div class="row-right">${statusTag(b.paymentStatus)}</div></div>
+    `).join('') : `<div class="hint">Nothing scheduled.</div>`}
+  </div>
+
+  <div class="card">
+    <div class="card-title">💰 Expected cost today</div>
+    <div class="display" style="font-size:20px;font-weight:600;">${fmtMoney(expectedCost)}</div>
+    ${expensesToday.length ? `<div class="hint">${fmtMoney(expensesToday.reduce((s,e)=>s+(Number(e.amount)||0),0))} already logged</div>` : ''}
+  </div>
+
+  <div class="card">
+    <div class="card-title">Tasks due today</div>
+    ${tasksToday.length ? tasksToday.map(t=>`<div class="row"><div class="row-main"><div class="row-title">${esc(t.text)}</div><div class="row-sub">${esc(t.sec)}</div></div></div>`).join('') : `<div class="hint">Nothing scheduled.</div>`}
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚠️ Important notes</div>
+    ${day && day.notes ? `<div class="hint">${esc(day.notes)}</div>` : `<div class="hint">Nothing scheduled.</div>`}
+  </div>
+  `;
+}
+
+/* =========================================================
+   ITINERARY
+   ========================================================= */
+function renderTramLine(day){
+  return `<div class="tram-line">
+    ${day.items.slice().sort((a,b)=>(a.time||'').localeCompare(b.time||'')).map(item=>`
+      <div class="stop ${item.status==='completed'?'done':''}">
+        <div class="stop-time">${item.time||'--:--'}${item.endTime?(' – '+item.endTime):''}</div>
+        <div class="stop-title">${esc(item.activity)} ${priorityTag(item.priority)}</div>
+        <div class="stop-meta">${item.location?('📍 '+esc(item.location)):''}${item.transport?(' · '+esc(item.transport)):''}${item.cost?(' · '+fmtMoney(item.cost)):''}</div>
+        ${item.notes?`<div class="stop-meta">${esc(item.notes)}</div>`:''}
+        <div class="stop-actions">
+          <span onclick="editItineraryItem('${day.id}','${item.id}')">Edit</span>
+          <span onclick="toggleItemStatus('${day.id}','${item.id}')">${item.status==='completed'?'Mark planned':'Mark done'}</span>
+          <span onclick="duplicateItem('${day.id}','${item.id}')">Duplicate</span>
+          <span onclick="deleteItem('${day.id}','${item.id}')">Delete</span>
+        </div>
+      </div>
+    `).join('')}
+  </div>`;
+}
+function renderItinerary(){
+  if(!state.itineraryDays.length){
+    return `
+    <div class="sec-head"><h2>Itinerary</h2></div>
+    <div class="empty">
+      <div class="ic">🗓️</div>
+      <h3>No days added yet</h3>
+      <p>Add your first day to start building the trip timeline.</p>
+      <button class="btn btn-primary" style="width:auto;padding:12px 20px;" onclick="openAddDay()">＋ Add Day</button>
+    </div>`;
+  }
+  const sorted = state.itineraryDays.slice().sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+  return `
+  <div class="sec-head"><h2>Itinerary</h2><button class="btn btn-rust btn-sm" onclick="openAddDay()">＋ Day</button></div>
+  ${sorted.map(day=>`
+    <div class="card day-card">
+      <div class="day-head" onclick="toggleDay('${day.id}')">
+        <div class="day-badge">${(day.date||'').slice(8,10)||'?'}</div>
+        <div class="day-head-text">
+          <div class="d">${fmtDate(day.date)} ${day.area?('· '+esc(day.area)):''}</div>
+          <div class="t">${esc(day.title||'Untitled day')}</div>
+        </div>
+        <div class="day-chev ${openDayId===day.id?'open':''}">▶</div>
+      </div>
+      ${openDayId===day.id ? `
+        <div style="display:flex;gap:8px;margin-top:10px;">
+          <button class="btn btn-ghost btn-sm" onclick="openAddItem('${day.id}')">＋ Item</button>
+          <button class="btn btn-ghost btn-sm" onclick="openEditDay('${day.id}')">Edit day</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteDay('${day.id}')">Delete day</button>
+        </div>
+        ${day.notes?`<div class="hint" style="margin-top:8px;">📝 ${esc(day.notes)}</div>`:''}
+        ${day.items.length ? renderTramLine(day) : `<div class="hint" style="margin-top:12px;">No items yet — tap "＋ Item" to add one.</div>`}
+      ` : ''}
+    </div>
+  `).join('')}
+  `;
+}
+function toggleDay(id){ openDayId = (openDayId===id) ? null : id; render(); }
+
+/* ---- Day modal ---- */
+function openAddDay(){
+  showSheet('Add Day', `
+    <div class="field"><label>Date</label><input type="date" id="f-date"></div>
+    <div class="field"><label>Day title</label><input id="f-title" placeholder="e.g. City Wander"></div>
+    <div class="field"><label>Area / neighbourhood</label><input id="f-area" placeholder="e.g. CBD"></div>
+    <div class="field"><label>Notes</label><textarea id="f-notes"></textarea></div>
+    <button class="btn btn-primary" onclick="saveDay()">Save day</button>
+  `);
+}
+function openEditDay(dayId){
+  const day = state.itineraryDays.find(d=>d.id===dayId);
+  showSheet('Edit Day', `
+    <div class="field"><label>Date</label><input type="date" id="f-date" value="${day.date||''}"></div>
+    <div class="field"><label>Day title</label><input id="f-title" value="${esc(day.title||'')}"></div>
+    <div class="field"><label>Area / neighbourhood</label><input id="f-area" value="${esc(day.area||'')}"></div>
+    <div class="field"><label>Notes</label><textarea id="f-notes">${esc(day.notes||'')}</textarea></div>
+    <button class="btn btn-primary" onclick="saveDay('${dayId}')">Save changes</button>
+  `);
+}
+async function saveDay(dayId){
+  const data = { date:val('f-date'), title:val('f-title'), area:val('f-area'), notes:val('f-notes') };
+  if(dayId){
+    const day = state.itineraryDays.find(d=>d.id===dayId);
+    Object.assign(day, data);
+  } else {
+    state.itineraryDays.push({id:uid(), ...data, items:[]});
+  }
+  await saveState(); closeSheet(); setTab('itinerary'); showToast('Saved ✓');
+}
+async function deleteDay(dayId){
+  if(!confirm('Delete this day and all its items?')) return;
+  state.itineraryDays = state.itineraryDays.filter(d=>d.id!==dayId);
+  await saveState(); openDayId=null; setTab('itinerary');
+}
+
+/* ---- Item modal ---- */
+let priorityChoice='must', statusChoice='planned';
+function openAddItem(dayId){
+  priorityChoice='must'; statusChoice='planned';
+  showSheet('Add Itinerary Item', itemForm(dayId, null));
+}
+function editItineraryItem(dayId, itemId){
+  const day = state.itineraryDays.find(d=>d.id===dayId);
+  const item = day.items.find(i=>i.id===itemId);
+  priorityChoice = item.priority||'must'; statusChoice = item.status||'planned';
+  showSheet('Edit Itinerary Item', itemForm(dayId, item));
+}
+function itemForm(dayId, item){
+  item = item || {};
+  return `
+    <div class="field-row">
+      <div class="field"><label>Start time</label><input type="time" id="f-time" value="${item.time||''}"></div>
+      <div class="field"><label>End time</label><input type="time" id="f-endtime" value="${item.endTime||''}"></div>
+    </div>
+    <div class="field"><label>Activity</label><input id="f-activity" value="${esc(item.activity||'')}" placeholder="e.g. Brighton Beach"></div>
+    <div class="field"><label>Location</label><input id="f-location" value="${esc(item.location||'')}"></div>
+    <div class="field"><label>Address</label><input id="f-address" value="${esc(item.address||'')}"></div>
+    <div class="field-row">
+      <div class="field"><label>Category</label><input id="f-category" value="${esc(item.category||'')}" placeholder="Food, Sightseeing…"></div>
+      <div class="field"><label>Transport</label><input id="f-transport" value="${esc(item.transport||'')}" placeholder="Tram, Walk…"></div>
+    </div>
+    <div class="field"><label>Priority</label>
+      <div class="chip-select">
+        ${chip('must','🔴 Must Do')}${chip('high','🟠 High')}${chip('opt','🟡 Optional')}${chip('if','⚪ If Time')}
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Duration</label><input id="f-duration" value="${esc(item.duration||'')}" placeholder="e.g. 1h 30m"></div>
+      <div class="field"><label>Estimated cost (AUD)</label><input type="number" id="f-cost" value="${item.cost||''}"></div>
+    </div>
+    <div class="field"><label>Related booking</label><input id="f-booking" value="${esc(item.booking||'')}" placeholder="Booking name or code"></div>
+    <div class="field"><label>Notes</label><textarea id="f-notes">${esc(item.notes||'')}</textarea></div>
+    <button class="btn btn-primary" onclick="saveItem('${dayId}','${item.id||''}')">Save item</button>
+  `;
+}
+function chip(val,label){
+  return `<div class="chip ${priorityChoice===val?'sel':''}" onclick="pickPriority('${val}')">${label}</div>`;
+}
+function pickPriority(v){ priorityChoice=v; document.querySelectorAll('.chip-select .chip').forEach(c=>c.classList.remove('sel')); event.target.classList.add('sel'); }
+async function saveItem(dayId, itemId){
+  const day = state.itineraryDays.find(d=>d.id===dayId);
+  const data = {
+    time:val('f-time'), endTime:val('f-endtime'), activity:val('f-activity'), location:val('f-location'),
+    address:val('f-address'), category:val('f-category'), transport:val('f-transport'), priority:priorityChoice,
+    duration:val('f-duration'), cost:val('f-cost'), booking:val('f-booking'), notes:val('f-notes')
+  };
+  if(itemId){
+    const item = day.items.find(i=>i.id===itemId);
+    Object.assign(item, data);
+  } else {
+    day.items.push({id:uid(), status:'planned', ...data});
+  }
+  await saveState(); closeSheet(); openDayId=dayId; setTab('itinerary'); showToast('Saved ✓');
+}
+async function deleteItem(dayId,itemId){
+  if(!confirm('Delete this item?')) return;
+  const day = state.itineraryDays.find(d=>d.id===dayId);
+  day.items = day.items.filter(i=>i.id!==itemId);
+  await saveState(); render();
+}
+async function duplicateItem(dayId,itemId){
+  const day = state.itineraryDays.find(d=>d.id===dayId);
+  const item = day.items.find(i=>i.id===itemId);
+  day.items.push({...item, id:uid()});
+  await saveState(); render(); showToast('Duplicated ✓');
+}
+async function toggleItemStatus(dayId,itemId){
+  const day = state.itineraryDays.find(d=>d.id===dayId);
+  const item = day.items.find(i=>i.id===itemId);
+  item.status = item.status==='completed' ? 'planned' : 'completed';
+  await saveState(); render();
+}
+
+/* =========================================================
+   EXPENSES
+   ========================================================= */
+const EXP_CATEGORIES = ['Flights','Hotels','Rental Car','Petrol','Parking','Toll','Public Transport','Uber/Taxi','Food','Café','Groceries','Attractions','Entertainment','Shopping','Fees','Other'];
+function renderExpenses(){
+  const confirmed = state.expenses.filter(e=>e.confirmed!==false);
+  const total = confirmed.reduce((s,e)=>s+(Number(e.amount)||0),0);
+  const budget = Number(state.trip.budget)||0;
+  const byCat = {};
+  confirmed.forEach(e=>{ byCat[e.category] = (byCat[e.category]||0) + (Number(e.amount)||0); });
+  const byPerson = {};
+  confirmed.forEach(e=>{ const p = e.paidBy||'Unassigned'; byPerson[p] = (byPerson[p]||0) + (Number(e.amount)||0); });
+  const maxCat = Math.max(1, ...Object.values(byCat));
+
+  if(!state.expenses.length){
+    return `
+    <div class="sec-head"><h2>Expenses</h2></div>
+    <div class="empty">
+      <div class="ic">💰</div><h3>No expenses yet</h3>
+      <p>Log your first expense to start tracking trip spending.</p>
+      <button class="btn btn-primary" style="width:auto;padding:12px 20px;" onclick="openAddExpense()">＋ Add Expense</button>
+    </div>`;
+  }
+
+  return `
+  <div class="sec-head"><h2>Expenses</h2><button class="btn btn-rust btn-sm" onclick="openAddExpense()">＋ Add</button></div>
+
+  <div class="card">
+    <div class="card-title">Total confirmed spending</div>
+    <div class="display" style="font-size:26px;font-weight:600;">${fmtMoney(total)}</div>
+    ${budget ? `<div class="progress ${total/budget>0.9?'rust':''}"><div style="width:${Math.min(100,Math.round(total/budget*100))}%"></div></div>
+    <div class="hint">Budget ${fmtMoney(budget)} · ${fmtMoney(Math.max(0,budget-total))} remaining</div>` : `<div class="hint">Set a trip budget in More → Trip Settings.</div>`}
+  </div>
+
+  <div class="card">
+    <div class="card-title">By category</div>
+    ${Object.entries(byCat).sort((a,b)=>b[1]-a[1]).map(([cat,amt])=>`
+      <div class="barrow">
+        <div class="lb">${categoryIcon(cat)} ${esc(cat)}</div>
+        <div class="track"><div style="width:${Math.round(amt/maxCat*100)}%"></div></div>
+        <div class="val">${fmtMoney(amt)}</div>
+      </div>
+    `).join('')}
+  </div>
+
+  <div class="card">
+    <div class="card-title">Who paid</div>
+    ${Object.entries(byPerson).sort((a,b)=>b[1]-a[1]).map(([p,amt])=>`
+      <div class="row"><div class="row-main"><div class="row-title">${esc(p)}</div><div class="row-sub">${total?Math.round(amt/total*100):0}% of total</div></div><div class="row-right"><div class="row-title">${fmtMoney(amt)}</div></div></div>
+    `).join('')}
+  </div>
+
+  <div class="card">
+    <div class="card-title">All expenses <span class="link" onclick="exportExpensesCSV()">Export CSV</span></div>
+    ${state.expenses.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).map(e=>`
+      <div class="row">
+        <div class="row-main">
+          <div class="row-title">${categoryIcon(e.category)} ${esc(e.description||e.category)} ${e.demo?'<span class="demo-flag">DEMO</span>':''}</div>
+          <div class="row-sub">${fmtDate(e.date)} · ${esc(e.paidBy||'—')} · ${esc(e.method||'')}${e.confirmed===false?' · Estimated':''}</div>
+        </div>
+        <div class="row-right">
+          <div class="row-title">${fmtMoney(e.amount)}</div>
+          <div style="display:flex;gap:8px;"><span class="link" style="font-size:11.5px;cursor:pointer;color:var(--rust);" onclick="openAddExpense('${e.id}')">Edit</span><span class="link" style="font-size:11.5px;cursor:pointer;color:var(--red);" onclick="deleteExpense('${e.id}')">Delete</span></div>
+        </div>
+      </div>
+    `).join('')}
+  </div>
+  `;
+}
+function openAddExpense(id){
+  const e = id ? state.expenses.find(x=>x.id===id) : {};
+  showSheet(id?'Edit Expense':'Add Expense', `
+    <div class="field-row">
+      <div class="field"><label>Amount</label><input type="number" id="f-amount" value="${e.amount||''}"></div>
+      <div class="field"><label>Currency</label><input id="f-currency" value="${e.currency||'AUD'}"></div>
+    </div>
+    <div class="field"><label>Date</label><input type="date" id="f-date" value="${e.date||todayStr()}"></div>
+    <div class="field"><label>Category</label><select id="f-category">${EXP_CATEGORIES.map(c=>`<option value="${c}" ${e.category===c?'selected':''}>${categoryIcon(c)} ${c}</option>`).join('')}</select></div>
+    <div class="field"><label>Description</label><input id="f-description" value="${esc(e.description||'')}"></div>
+    <div class="field"><label>Location</label><input id="f-location" value="${esc(e.location||'')}"></div>
+    <div class="field-row">
+      <div class="field"><label>Paid by</label><input id="f-paidby" value="${esc(e.paidBy||'Me')}" placeholder="Me, Mum, Dad…"></div>
+      <div class="field"><label>Payment method</label><input id="f-method" value="${esc(e.method||'')}" placeholder="Card, Cash…"></div>
+    </div>
+    <div class="field"><label>Related booking/activity</label><input id="f-related" value="${esc(e.related||'')}"></div>
+    <div class="field"><label>Status</label>
+      <div class="chip-select">
+        <div class="chip ${e.confirmed!==false?'sel':''}" onclick="pickConfirmed(true)">✅ Confirmed</div>
+        <div class="chip ${e.confirmed===false?'sel':''}" onclick="pickConfirmed(false)">🟡 Estimated</div>
+      </div>
+    </div>
+    <div class="field"><label>Notes</label><textarea id="f-notes">${esc(e.notes||'')}</textarea></div>
+    <button class="btn btn-primary" onclick="saveExpense('${id||''}')">Save expense</button>
+  `);
+  expConfirmed = e.confirmed!==false;
+}
+let expConfirmed=true;
+function pickConfirmed(v){ expConfirmed=v; document.querySelectorAll('.chip-select .chip').forEach(c=>c.classList.remove('sel')); event.target.classList.add('sel'); }
+async function saveExpense(id){
+  const data = {
+    amount:Number(val('f-amount'))||0, currency:val('f-currency'), date:val('f-date'), category:val('f-category'),
+    description:val('f-description'), location:val('f-location'), paidBy:val('f-paidby'), method:val('f-method'),
+    related:val('f-related'), notes:val('f-notes'), confirmed:expConfirmed
+  };
+  if(id){ Object.assign(state.expenses.find(e=>e.id===id), data); }
+  else { state.expenses.push({id:uid(), ...data}); }
+  await saveState(); closeSheet(); setTab('expenses'); showToast('Saved ✓');
+}
+async function deleteExpense(id){
+  if(!confirm('Delete this expense?')) return;
+  state.expenses = state.expenses.filter(e=>e.id!==id);
+  await saveState(); render();
+}
+function exportExpensesCSV(){
+  const rows = [['Date','Category','Description','Location','Amount','Currency','PaidBy','Method','Related','Status','Notes']];
+  state.expenses.forEach(e=>rows.push([e.date,e.category,e.description,e.location,e.amount,e.currency,e.paidBy,e.method,e.related,e.confirmed===false?'Estimated':'Confirmed',e.notes]));
+  const csv = rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  downloadFile('melbourne-trip-expenses.csv', csv, 'text/csv');
+}
+
+/* =========================================================
+   BOOKINGS
+   ========================================================= */
+const BOOKING_TYPES = ['Flight','Hotel','Rental Car','Restaurant','Attraction','Event','Transport','Parking','Tour','Other'];
+function renderBookings(){
+  if(!state.bookings.length){
+    return `
+    <div class="sec-head"><h2>Bookings</h2></div>
+    <div class="empty">
+      <div class="ic">🎟️</div><h3>No bookings added yet</h3>
+      <p>Add your first booking to keep confirmation codes in one place.</p>
+      <button class="btn btn-primary" style="width:auto;padding:12px 20px;" onclick="openAddBooking()">＋ Add Booking</button>
+    </div>`;
+  }
+  return `
+  <div class="sec-head"><h2>Bookings</h2><button class="btn btn-rust btn-sm" onclick="openAddBooking()">＋ Add</button></div>
+  ${state.bookings.slice().sort((a,b)=>(a.date||'').localeCompare(b.date||'')).map(b=>`
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+        <div>
+          <div class="row-title">${esc(b.name)} ${b.demo?'<span class="demo-flag">DEMO</span>':''}</div>
+          <div class="row-sub">${esc(b.type)} · ${fmtDate(b.date)} ${b.time||''} · ${esc(b.location||'')}</div>
+        </div>
+        ${statusTag(b.paymentStatus)}
+      </div>
+      ${b.bookingNo? `<div style="margin-top:10px;display:flex;align-items:center;gap:8px;">
+        <span class="mono" style="font-size:13px;font-weight:600;">${esc(b.bookingNo)}</span>
+        <button class="copybtn" onclick="copyText('${esc(b.bookingNo)}')">Copy</button>
+      </div>` : ''}
+      ${b.instructions?`<div class="hint" style="margin-top:6px;">${esc(b.instructions)}</div>`:''}
+      <div style="display:flex;gap:14px;margin-top:10px;">
+        <span class="link" style="color:var(--rust);font-weight:600;font-size:12.5px;cursor:pointer;" onclick="openAddBooking('${b.id}')">Edit</span>
+        <span class="link" style="color:var(--red);font-weight:600;font-size:12.5px;cursor:pointer;" onclick="deleteBooking('${b.id}')">Delete</span>
+        ${b.website?`<a href="${esc(b.website)}" target="_blank" style="color:var(--green);font-weight:600;font-size:12.5px;">Open link ↗</a>`:''}
+      </div>
+    </div>
+  `).join('')}
+  `;
+}
+function openAddBooking(id){
+  const b = id ? state.bookings.find(x=>x.id===id) : {};
+  bookingType = b.type || 'Flight'; bookingStatus = b.paymentStatus || 'confirmed';
+  showSheet(id?'Edit Booking':'Add Booking', `
+    <div class="field"><label>Type</label><select id="f-type">${BOOKING_TYPES.map(t=>`<option ${b.type===t?'selected':''}>${t}</option>`).join('')}</select></div>
+    <div class="field"><label>Name</label><input id="f-name" value="${esc(b.name||'')}"></div>
+    <div class="field-row">
+      <div class="field"><label>Date</label><input type="date" id="f-date" value="${b.date||''}"></div>
+      <div class="field"><label>Time</label><input type="time" id="f-time" value="${b.time||''}"></div>
+    </div>
+    <div class="field"><label>Location</label><input id="f-location" value="${esc(b.location||'')}"></div>
+    <div class="field-row">
+      <div class="field"><label>Booking number</label><input id="f-bookingno" value="${esc(b.bookingNo||'')}"></div>
+      <div class="field"><label>Confirmation number</label><input id="f-confno" value="${esc(b.confNo||'')}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Price</label><input type="number" id="f-price" value="${b.price||''}"></div>
+      <div class="field"><label>Website</label><input id="f-website" value="${esc(b.website||'')}"></div>
+    </div>
+    <div class="field"><label>Status</label>
+      <div class="chip-select" id="bstatus-chips">
+        ${['confirmed','pending','cancelled','action'].map(s=>`<div class="chip ${bookingStatus===s?'sel':''}" onclick="pickBookingStatus('${s}')">${({confirmed:'✅ Confirmed',pending:'🟡 Pending',cancelled:'❌ Cancelled',action:'⚠️ Action needed'})[s]}</div>`).join('')}
+      </div>
+    </div>
+    <div class="field"><label>Important instructions</label><textarea id="f-instructions">${esc(b.instructions||'')}</textarea></div>
+    <div class="field"><label>Notes</label><textarea id="f-notes">${esc(b.notes||'')}</textarea></div>
+    <button class="btn btn-primary" onclick="saveBooking('${id||''}')">Save booking</button>
+  `);
+}
+let bookingType='Flight', bookingStatus='confirmed';
+function pickBookingStatus(v){ bookingStatus=v; document.querySelectorAll('#bstatus-chips .chip').forEach(c=>c.classList.remove('sel')); event.target.classList.add('sel'); }
+async function saveBooking(id){
+  const data = {
+    type:val('f-type'), name:val('f-name'), date:val('f-date'), time:val('f-time'), location:val('f-location'),
+    bookingNo:val('f-bookingno'), confNo:val('f-confno'), price:val('f-price'), website:val('f-website'),
+    paymentStatus:bookingStatus, instructions:val('f-instructions'), notes:val('f-notes')
+  };
+  if(id){ Object.assign(state.bookings.find(b=>b.id===id), data); }
+  else { state.bookings.push({id:uid(), ...data}); }
+  await saveState(); closeSheet(); setTab('bookings'); showToast('Saved ✓');
+}
+async function deleteBooking(id){
+  if(!confirm('Delete this booking?')) return;
+  state.bookings = state.bookings.filter(b=>b.id!==id);
+  await saveState(); render();
+}
+function openBookingCodes(){
+  const items = [];
+  state.hotels.forEach(h=>h.bookingRef && items.push({label:h.name,code:h.bookingRef}));
+  state.bookings.forEach(b=>b.bookingNo && items.push({label:b.name,code:b.bookingNo}));
+  if(state.rentalCar && state.rentalCar.bookingRef) items.push({label:state.rentalCar.company||'Rental car',code:state.rentalCar.bookingRef});
+  state.flights.forEach(f=>f.bookingRef && items.push({label:`${f.airline||''} ${f.flightNo||''}`,code:f.bookingRef}));
+  showSheet('🔑 Booking Codes', items.length ? items.map(i=>`
+    <div class="row"><div class="row-main"><div class="row-title">${esc(i.label)}</div></div>
+    <div class="row-right"><span class="mono" style="font-weight:600;">${esc(i.code)}</span><button class="copybtn" onclick="copyText('${esc(i.code)}')">Copy</button></div></div>
+  `).join('') : `<div class="hint">No booking codes saved yet.</div>`);
+}
+
+/* =========================================================
+   CHECKLISTS
+   ========================================================= */
+let checklistSection = null;
+function renderChecklists(){
+  const sections = Object.keys(state.checklists);
+  if(!checklistSection || !sections.includes(checklistSection)) checklistSection = sections[0];
+  const items = state.checklists[checklistSection] || [];
+  const done = items.filter(i=>i.done).length;
+  return `
+  <div class="sec-head"><h2>Checklists</h2></div>
+  <div class="segmented">
+    ${sections.map(s=>`<button class="seg-btn ${checklistSection===s?'active':''}" onclick="setChecklistSection('${s}')">${s}</button>`).join('')}
+  </div>
+  <div class="card">
+    <div class="card-title">${checklistSection} <span class="muted" style="text-transform:none;font-weight:500;">${done} / ${items.length} completed</span></div>
+    <div class="progress"><div style="width:${items.length?Math.round(done/items.length*100):0}%"></div></div>
+    <div style="margin-top:10px;">
+    ${items.length ? items.map(i=>`
+      <div class="checkrow">
+        <div class="checkbox ${i.done?'done':''}" onclick="toggleCheck('${checklistSection}','${i.id}')">${i.done?'✓':''}</div>
+        <div class="checkrow-text ${i.done?'done':''}">${esc(i.text)}${i.dueDate?`<div class="hint">Due ${fmtDate(i.dueDate)}</div>`:''}</div>
+        <div class="del-x" onclick="deleteCheckItem('${checklistSection}','${i.id}')">✕</div>
+      </div>
+    `).join('') : `<div class="hint">No items yet.</div>`}
+    </div>
+    <div style="margin-top:12px;display:flex;gap:8px;">
+      <input id="new-check-item" placeholder="Add item…" style="flex:1;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);">
+      <button class="btn btn-rust btn-sm" onclick="addCheckItem()">Add</button>
+    </div>
+  </div>
+  `;
+}
+function setChecklistSection(s){ checklistSection=s; render(); }
+async function toggleCheck(sec,id){
+  const item = state.checklists[sec].find(i=>i.id===id);
+  item.done = !item.done;
+  await saveState(); render();
+}
+async function deleteCheckItem(sec,id){
+  state.checklists[sec] = state.checklists[sec].filter(i=>i.id!==id);
+  await saveState(); render();
+}
+async function addCheckItem(){
+  const text = val('new-check-item');
+  if(!text) return;
+  state.checklists[checklistSection].push({id:uid(), text, done:false});
+  await saveState(); render();
+}
+
+/* =========================================================
+   PACKING
+   ========================================================= */
+let packingCategory = null;
+function renderPacking(){
+  const cats = Object.keys(state.packing);
+  if(!packingCategory || !cats.includes(packingCategory)) packingCategory = cats[0];
+  const allItems = Object.values(state.packing).flat();
+  const packed = allItems.filter(i=>i.packed).length;
+  const items = state.packing[packingCategory] || [];
+  return `
+  <div class="sec-head"><h2>🧳 Packing List</h2><span class="link" style="font-size:12.5px;color:var(--rust);font-weight:600;cursor:pointer;" onclick="setTab('more')">More</span></div>
+  <div class="card">
+    <div class="card-title">Overall progress</div>
+    <div class="display" style="font-size:20px;font-weight:600;">${packed} / ${allItems.length} packed</div>
+    <div class="progress"><div style="width:${allItems.length?Math.round(packed/allItems.length*100):0}%"></div></div>
+  </div>
+  <div class="segmented">${cats.map(c=>`<button class="seg-btn ${packingCategory===c?'active':''}" onclick="setPackingCategory('${c}')">${c}</button>`).join('')}</div>
+  <div class="card">
+    <div class="card-title">${packingCategory}</div>
+    ${items.length ? items.map(i=>`
+      <div class="checkrow">
+        <div class="checkbox ${i.packed?'done':''}" onclick="togglePacked('${packingCategory}','${i.id}')">${i.packed?'✓':''}</div>
+        <div class="checkrow-text ${i.packed?'done':''}">${esc(i.text)}</div>
+        <div class="del-x" onclick="deletePackItem('${packingCategory}','${i.id}')">✕</div>
+      </div>
+    `).join('') : `<div class="hint">No items yet.</div>`}
+    <div style="margin-top:12px;display:flex;gap:8px;">
+      <input id="new-pack-item" placeholder="Add item…" style="flex:1;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);">
+      <button class="btn btn-rust btn-sm" onclick="addPackItem()">Add</button>
+    </div>
+  </div>
+  `;
+}
+function setPackingCategory(c){ packingCategory=c; render(); }
+async function togglePacked(cat,id){
+  const item = state.packing[cat].find(i=>i.id===id);
+  item.packed = !item.packed;
+  await saveState(); render();
+}
+async function deletePackItem(cat,id){
+  state.packing[cat] = state.packing[cat].filter(i=>i.id!==id);
+  await saveState(); render();
+}
+async function addPackItem(){
+  const text = val('new-pack-item');
+  if(!text) return;
+  state.packing[packingCategory].push({id:uid(), text, packed:false});
+  await saveState(); render();
+}
+
+/* =========================================================
+   HOTELS
+   ========================================================= */
+function renderHotels(){
+  return `
+  <div class="sec-head"><h2>🏨 Hotels</h2><button class="btn btn-rust btn-sm" onclick="openAddHotel()">＋ Add</button></div>
+  ${!state.hotels.length ? `<div class="empty"><div class="ic">🏨</div><h3>No hotels added yet</h3><p>Add your first hotel to keep booking information in one place.</p><button class="btn btn-primary" style="width:auto;padding:12px 20px;" onclick="openAddHotel()">＋ Add Hotel</button></div>` : ''}
+  ${state.hotels.map(h=>`
+    <div class="card">
+      <div class="row-title">${esc(h.name)} ${h.demo?'<span class="demo-flag">DEMO</span>':''}</div>
+      <div class="row-sub">${esc(h.address||'—')}</div>
+      <div style="display:flex;gap:16px;margin-top:10px;font-size:12.5px;">
+        <div><div class="muted">Check-in</div><b>${fmtDate(h.checkIn)} ${h.checkInTime||''}</b></div>
+        <div><div class="muted">Check-out</div><b>${fmtDate(h.checkOut)} ${h.checkOutTime||''}</b></div>
+        <div><div class="muted">Nights</div><b>${h.nights||'—'}</b></div>
+      </div>
+      ${h.bookingRef?`<div style="margin-top:10px;display:flex;align-items:center;gap:8px;">
+        <span class="muted" style="font-size:11.5px;">🔑 CODE</span><span class="mono" style="font-weight:600;">${esc(h.bookingRef)}</span>
+        <button class="copybtn" onclick="copyText('${esc(h.bookingRef)}')">Copy</button>
+      </div>`:''}
+      <div class="hint" style="margin-top:8px;">${h.roomType?esc(h.roomType)+' · ':''}${h.guests?h.guests+' guests · ':''}${h.price?fmtMoney(h.price)+' '+esc(h.currency||''):''}${h.paymentStatus?' · '+esc(h.paymentStatus):''}</div>
+      ${h.breakfast?`<div class="hint">🍳 Breakfast: ${esc(h.breakfast)}</div>`:''}
+      ${h.parking?`<div class="hint">🅿️ Parking: ${esc(h.parking)}</div>`:''}
+      ${h.cancellation?`<div class="hint">📋 Cancellation: ${esc(h.cancellation)}</div>`:''}
+      ${h.instructions?`<div class="hint">${esc(h.instructions)}</div>`:''}
+      <div style="display:flex;gap:14px;margin-top:10px;flex-wrap:wrap;">
+        ${h.mapsLink?`<a href="${esc(h.mapsLink)}" target="_blank" class="btn btn-ghost btn-sm">Open Maps</a>`:''}
+        ${h.bookingLink?`<a href="${esc(h.bookingLink)}" target="_blank" class="btn btn-ghost btn-sm">Open Booking</a>`:''}
+        <span class="link" style="color:var(--rust);font-weight:600;font-size:12.5px;cursor:pointer;align-self:center;" onclick="openAddHotel('${h.id}')">Edit</span>
+        <span class="link" style="color:var(--red);font-weight:600;font-size:12.5px;cursor:pointer;align-self:center;" onclick="deleteHotel('${h.id}')">Delete</span>
+      </div>
+    </div>
+  `).join('')}
+  `;
+}
+function openAddHotel(id){
+  const h = id ? state.hotels.find(x=>x.id===id) : {};
+  showSheet(id?'Edit Hotel':'Add Hotel', `
+    <div class="field"><label>Hotel name</label><input id="f-name" value="${esc(h.name||'')}"></div>
+    <div class="field"><label>Address</label><input id="f-address" value="${esc(h.address||'')}"></div>
+    <div class="field"><label>Google Maps link</label><input id="f-mapslink" value="${esc(h.mapsLink||'')}"></div>
+    <div class="field"><label>Booking website link</label><input id="f-bookinglink" value="${esc(h.bookingLink||'')}"></div>
+    <div class="field"><label>🔑 Booking / reference number</label><input id="f-bookingref" value="${esc(h.bookingRef||'')}"></div>
+    <div class="field-row">
+      <div class="field"><label>Check-in date</label><input type="date" id="f-checkin" value="${h.checkIn||''}"></div>
+      <div class="field"><label>Check-in time</label><input type="time" id="f-checkintime" value="${h.checkInTime||''}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Check-out date</label><input type="date" id="f-checkout" value="${h.checkOut||''}"></div>
+      <div class="field"><label>Check-out time</label><input type="time" id="f-checkouttime" value="${h.checkOutTime||''}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Nights</label><input type="number" id="f-nights" value="${h.nights||''}"></div>
+      <div class="field"><label>Guests</label><input type="number" id="f-guests" value="${h.guests||''}"></div>
+    </div>
+    <div class="field"><label>Room type</label><input id="f-roomtype" value="${esc(h.roomType||'')}"></div>
+    <div class="field-row">
+      <div class="field"><label>Price</label><input type="number" id="f-price" value="${h.price||''}"></div>
+      <div class="field"><label>Currency</label><input id="f-currency" value="${esc(h.currency||'AUD')}"></div>
+    </div>
+    <div class="field"><label>Payment status</label><input id="f-paymentstatus" value="${esc(h.paymentStatus||'')}" placeholder="Paid, Deposit paid, Unpaid…"></div>
+    <div class="field"><label>Deposit / bond</label><input id="f-deposit" value="${esc(h.deposit||'')}"></div>
+    <div class="field"><label>Breakfast</label><input id="f-breakfast" value="${esc(h.breakfast||'')}"></div>
+    <div class="field"><label>Parking</label><input id="f-parking" value="${esc(h.parking||'')}"></div>
+    <div class="field"><label>Cancellation policy</label><input id="f-cancellation" value="${esc(h.cancellation||'')}"></div>
+    <div class="field"><label>Check-in instructions / special requests</label><textarea id="f-instructions">${esc(h.instructions||'')}</textarea></div>
+    <div class="field"><label>Notes</label><textarea id="f-notes">${esc(h.notes||'')}</textarea></div>
+    <button class="btn btn-primary" onclick="saveHotel('${id||''}')">Save hotel</button>
+  `);
+}
+async function saveHotel(id){
+  const data = {
+    name:val('f-name'), address:val('f-address'), mapsLink:val('f-mapslink'), bookingLink:val('f-bookinglink'),
+    bookingRef:val('f-bookingref'), checkIn:val('f-checkin'), checkInTime:val('f-checkintime'),
+    checkOut:val('f-checkout'), checkOutTime:val('f-checkouttime'), nights:val('f-nights'), guests:val('f-guests'),
+    roomType:val('f-roomtype'), price:val('f-price'), currency:val('f-currency'), paymentStatus:val('f-paymentstatus'),
+    deposit:val('f-deposit'), breakfast:val('f-breakfast'), parking:val('f-parking'), cancellation:val('f-cancellation'),
+    instructions:val('f-instructions'), notes:val('f-notes')
+  };
+  if(id){ Object.assign(state.hotels.find(h=>h.id===id), data); }
+  else { state.hotels.push({id:uid(), ...data}); }
+  await saveState(); closeSheet(); setTab('hotels'); showToast('Saved ✓');
+}
+async function deleteHotel(id){
+  if(!confirm('Delete this hotel?')) return;
+  state.hotels = state.hotels.filter(h=>h.id!==id);
+  await saveState(); render();
+}
+
+/* =========================================================
+   FLIGHTS
+   ========================================================= */
+function renderFlights(){
+  return `
+  <div class="sec-head"><h2>✈️ Flights</h2><button class="btn btn-rust btn-sm" onclick="openAddFlight()">＋ Add</button></div>
+  ${!state.flights.length ? `<div class="empty"><div class="ic">✈️</div><h3>No flights added yet</h3><p>Add your flight details to keep them handy at the airport.</p><button class="btn btn-primary" style="width:auto;padding:12px 20px;" onclick="openAddFlight()">＋ Add Flight</button></div>` : ''}
+  ${state.flights.map(f=>`
+    <div class="card">
+      <div class="row-title">${esc(f.airline||'')} ${esc(f.flightNo||'')} ${f.demo?'<span class="demo-flag">DEMO</span>':''}</div>
+      <div class="row-sub">${fmtDate(f.date)} · ${esc(f.from||'—')} → ${esc(f.to||'—')}</div>
+      <div style="display:flex;gap:16px;margin-top:10px;font-size:12.5px;">
+        <div><div class="muted">Depart</div><b>${f.depTime||'—'}</b></div>
+        <div><div class="muted">Arrive</div><b>${f.arrTime||'—'}</b></div>
+        <div><div class="muted">Terminal</div><b>${f.terminal||'—'}</b></div>
+      </div>
+      ${f.bookingRef?`<div style="margin-top:10px;display:flex;align-items:center;gap:8px;"><span class="mono" style="font-weight:600;">${esc(f.bookingRef)}</span><button class="copybtn" onclick="copyText('${esc(f.bookingRef)}')">Copy</button></div>`:''}
+      <div class="hint">${f.bags?('🧳 '+esc(f.bags)+' · '):''}${f.seats?('💺 '+esc(f.seats)):''}</div>
+      ${f.notes?`<div class="hint">${esc(f.notes)}</div>`:''}
+      <div style="display:flex;gap:14px;margin-top:10px;">
+        <span class="link" style="color:var(--rust);font-weight:600;font-size:12.5px;cursor:pointer;" onclick="openAddFlight('${f.id}')">Edit</span>
+        <span class="link" style="color:var(--red);font-weight:600;font-size:12.5px;cursor:pointer;" onclick="deleteFlight('${f.id}')">Delete</span>
+      </div>
+    </div>
+  `).join('')}
+  `;
+}
+function openAddFlight(id){
+  const f = id ? state.flights.find(x=>x.id===id) : {};
+  showSheet(id?'Edit Flight':'Add Flight', `
+    <div class="field-row">
+      <div class="field"><label>Airline</label><input id="f-airline" value="${esc(f.airline||'')}"></div>
+      <div class="field"><label>Flight number</label><input id="f-flightno" value="${esc(f.flightNo||'')}"></div>
+    </div>
+    <div class="field"><label>Date</label><input type="date" id="f-date" value="${f.date||''}"></div>
+    <div class="field-row">
+      <div class="field"><label>Departure airport</label><input id="f-from" value="${esc(f.from||'')}"></div>
+      <div class="field"><label>Arrival airport</label><input id="f-to" value="${esc(f.to||'')}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Departure time</label><input type="time" id="f-deptime" value="${f.depTime||''}"></div>
+      <div class="field"><label>Arrival time</label><input type="time" id="f-arrtime" value="${f.arrTime||''}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Terminal</label><input id="f-terminal" value="${esc(f.terminal||'')}"></div>
+      <div class="field"><label>Booking reference</label><input id="f-bookingref" value="${esc(f.bookingRef||'')}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Ticket price</label><input type="number" id="f-price" value="${f.price||''}"></div>
+      <div class="field"><label>Baggage allowance</label><input id="f-bags" value="${esc(f.bags||'')}"></div>
+    </div>
+    <div class="field"><label>Seat information</label><input id="f-seats" value="${esc(f.seats||'')}"></div>
+    <div class="field"><label>Notes</label><textarea id="f-notes">${esc(f.notes||'')}</textarea></div>
+    <button class="btn btn-primary" onclick="saveFlight('${id||''}')">Save flight</button>
+  `);
+}
+async function saveFlight(id){
+  const data = {
+    airline:val('f-airline'), flightNo:val('f-flightno'), date:val('f-date'), from:val('f-from'), to:val('f-to'),
+    depTime:val('f-deptime'), arrTime:val('f-arrtime'), terminal:val('f-terminal'), bookingRef:val('f-bookingref'),
+    price:val('f-price'), bags:val('f-bags'), seats:val('f-seats'), notes:val('f-notes')
+  };
+  if(id){ Object.assign(state.flights.find(f=>f.id===id), data); }
+  else { state.flights.push({id:uid(), checkedIn:false, ...data}); }
+  await saveState(); closeSheet(); setTab('flights'); showToast('Saved ✓');
+}
+async function deleteFlight(id){
+  if(!confirm('Delete this flight?')) return;
+  state.flights = state.flights.filter(f=>f.id!==id);
+  await saveState(); render();
+}
+
+/* =========================================================
+   RENTAL CAR
+   ========================================================= */
+function renderCar(){
+  const c = state.rentalCar || {};
+  const hasData = c.company || c.vehicle || c.bookingRef;
+  const checklist = state.checklists['Rental Car'] || [];
+  return `
+  <div class="sec-head"><h2>🚗 Rental Car</h2><button class="btn btn-rust btn-sm" onclick="openEditCar()">${hasData?'Edit':'＋ Add'}</button></div>
+  ${!hasData ? `<div class="empty"><div class="ic">🚗</div><h3>No rental car added yet</h3><p>Add your rental car booking to keep pickup and return details handy.</p><button class="btn btn-primary" style="width:auto;padding:12px 20px;" onclick="openEditCar()">＋ Add Car</button></div>` : `
+  <div class="card">
+    <div class="row-title">${esc(c.company||'')} ${c.demo?'<span class="demo-flag">DEMO</span>':''}</div>
+    <div class="row-sub">${esc(c.vehicle||'')} ${c.category?('· '+esc(c.category)):''}</div>
+    <div style="display:flex;gap:16px;margin-top:10px;font-size:12.5px;">
+      <div><div class="muted">Pick-up</div><b>${fmtDate(c.pickupDate)} ${c.pickupTime||''}</b><div class="muted" style="margin-top:2px;">${esc(c.pickupLocation||'')}</div></div>
+      <div><div class="muted">Return</div><b>${fmtDate(c.returnDate)} ${c.returnTime||''}</b><div class="muted" style="margin-top:2px;">${esc(c.returnLocation||'')}</div></div>
+    </div>
+    ${c.bookingRef?`<div style="margin-top:10px;display:flex;align-items:center;gap:8px;"><span class="mono" style="font-weight:600;">${esc(c.bookingRef)}</span><button class="copybtn" onclick="copyText('${esc(c.bookingRef)}')">Copy</button></div>`:''}
+    <div class="hint" style="margin-top:8px;">${c.price?fmtMoney(c.price)+' · ':''}${c.deposit?('Bond '+esc(c.deposit)+' · '):''}${c.excess?('Excess '+esc(c.excess)):''}</div>
+    ${c.insurance?`<div class="hint">🛡️ ${esc(c.insurance)}</div>`:''}
+    ${c.fuelPolicy?`<div class="hint">⛽ ${esc(c.fuelPolicy)}</div>`:''}
+    ${c.km?`<div class="hint">🛣️ ${esc(c.km)} km included</div>`:''}
+    ${c.notes?`<div class="hint">${esc(c.notes)}</div>`:''}
+  </div>
+  `}
+
+  <div class="card">
+    <div class="card-title">🚗 Car checklist</div>
+    ${checklist.length ? checklist.map(i=>`
+      <div class="checkrow">
+        <div class="checkbox ${i.done?'done':''}" onclick="toggleCheck('Rental Car','${i.id}')">${i.done?'✓':''}</div>
+        <div class="checkrow-text ${i.done?'done':''}">${esc(i.text)}</div>
+        <div class="del-x" onclick="deleteCheckItem('Rental Car','${i.id}')">✕</div>
+      </div>
+    `).join('') : `<div class="hint">No checklist items yet.</div>`}
+    <div style="margin-top:12px;display:flex;gap:8px;">
+      <input id="new-car-check" placeholder="Add checklist item…" style="flex:1;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);">
+      <button class="btn btn-rust btn-sm" onclick="addCarCheckItem()">Add</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🚋 Melbourne Driving Notes</div>
+    <div class="hint">🔺 Hook turns: at some CBD intersections you must turn right from the left lane — give way to trams and cross-traffic.</div>
+    <div class="hint">🚋 Never overtake a stopped tram on the left — pull up behind and wait for passengers to clear.</div>
+    <div class="hint">🅿️ Clearway restrictions apply on many CBD roads during peak hours — check signage before leaving the car.</div>
+    <div class="hint">🛣️ CityLink and EastLink are toll roads with no boom gates — register for a pass or day pass to avoid fines.</div>
+  </div>
+  `;
+}
+async function addCarCheckItem(){
+  const text = val('new-car-check');
+  if(!text) return;
+  if(!state.checklists['Rental Car']) state.checklists['Rental Car']=[];
+  state.checklists['Rental Car'].push({id:uid(), text, done:false});
+  await saveState(); render();
+}
+function openEditCar(){
+  const c = state.rentalCar || {};
+  showSheet('Rental Car', `
+    <div class="field"><label>Company</label><input id="f-company" value="${esc(c.company||'')}"></div>
+    <div class="field-row">
+      <div class="field"><label>Vehicle</label><input id="f-vehicle" value="${esc(c.vehicle||'')}"></div>
+      <div class="field"><label>Category</label><input id="f-category" value="${esc(c.category||'')}"></div>
+    </div>
+    <div class="field"><label>Pick-up location</label><input id="f-pickuploc" value="${esc(c.pickupLocation||'')}"></div>
+    <div class="field-row">
+      <div class="field"><label>Pick-up date</label><input type="date" id="f-pickupdate" value="${c.pickupDate||''}"></div>
+      <div class="field"><label>Pick-up time</label><input type="time" id="f-pickuptime" value="${c.pickupTime||''}"></div>
+    </div>
+    <div class="field"><label>Return location</label><input id="f-returnloc" value="${esc(c.returnLocation||'')}"></div>
+    <div class="field-row">
+      <div class="field"><label>Return date</label><input type="date" id="f-returndate" value="${c.returnDate||''}"></div>
+      <div class="field"><label>Return time</label><input type="time" id="f-returntime" value="${c.returnTime||''}"></div>
+    </div>
+    <div class="field"><label>Booking number</label><input id="f-bookingref" value="${esc(c.bookingRef||'')}"></div>
+    <div class="field-row">
+      <div class="field"><label>Price</label><input type="number" id="f-price" value="${c.price||''}"></div>
+      <div class="field"><label>Bond / deposit</label><input id="f-deposit" value="${esc(c.deposit||'')}"></div>
+    </div>
+    <div class="field"><label>Insurance</label><input id="f-insurance" value="${esc(c.insurance||'')}"></div>
+    <div class="field-row">
+      <div class="field"><label>Excess</label><input id="f-excess" value="${esc(c.excess||'')}"></div>
+      <div class="field"><label>Fuel policy</label><input id="f-fuel" value="${esc(c.fuelPolicy||'')}"></div>
+    </div>
+    <div class="field"><label>Included kilometres</label><input id="f-km" value="${esc(c.km||'')}"></div>
+    <div class="field"><label>Notes</label><textarea id="f-notes">${esc(c.notes||'')}</textarea></div>
+    <button class="btn btn-primary" onclick="saveCar()">Save car details</button>
+  `);
+}
+async function saveCar(){
+  state.rentalCar = {
+    company:val('f-company'), vehicle:val('f-vehicle'), category:val('f-category'), pickupLocation:val('f-pickuploc'),
+    pickupDate:val('f-pickupdate'), pickupTime:val('f-pickuptime'), returnLocation:val('f-returnloc'),
+    returnDate:val('f-returndate'), returnTime:val('f-returntime'), bookingRef:val('f-bookingref'), price:val('f-price'),
+    deposit:val('f-deposit'), insurance:val('f-insurance'), excess:val('f-excess'), fuelPolicy:val('f-fuel'),
+    km:val('f-km'), notes:val('f-notes')
+  };
+  await saveState(); closeSheet(); setTab('car'); showToast('Saved ✓');
+}
+
+/* =========================================================
+   NOTES
+   ========================================================= */
+const NOTE_CATS = ['General','Hotel','Driving','Food','Shopping','Places','Ideas','Important'];
+function renderNotes(){
+  return `
+  <div class="sec-head"><h2>📝 Notes</h2><button class="btn btn-rust btn-sm" onclick="openAddNote()">＋ Add</button></div>
+  ${!state.notes.length ? `<div class="empty"><div class="ic">📝</div><h3>No notes yet</h3><p>Jot down anything useful for the trip.</p><button class="btn btn-primary" style="width:auto;padding:12px 20px;" onclick="openAddNote()">＋ Add Note</button></div>` : ''}
+  ${state.notes.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).map(n=>`
+    <div class="card">
+      <div class="row-title">${esc(n.title)} ${n.demo?'<span class="demo-flag">DEMO</span>':''}</div>
+      <div class="row-sub">${n.category} · ${fmtDate(n.date)}</div>
+      <div style="margin-top:8px;font-size:14px;">${esc(n.content)}</div>
+      <div style="display:flex;gap:14px;margin-top:10px;">
+        <span class="link" style="color:var(--rust);font-weight:600;font-size:12.5px;cursor:pointer;" onclick="openAddNote('${n.id}')">Edit</span>
+        <span class="link" style="color:var(--red);font-weight:600;font-size:12.5px;cursor:pointer;" onclick="deleteNote('${n.id}')">Delete</span>
+      </div>
+    </div>
+  `).join('')}
+  `;
+}
+function openAddNote(id){
+  const n = id ? state.notes.find(x=>x.id===id) : {};
+  showSheet(id?'Edit Note':'Add Note', `
+    <div class="field"><label>Title</label><input id="f-title" value="${esc(n.title||'')}"></div>
+    <div class="field"><label>Category</label><select id="f-category">${NOTE_CATS.map(c=>`<option ${n.category===c?'selected':''}>${c}</option>`).join('')}</select></div>
+    <div class="field"><label>Date</label><input type="date" id="f-date" value="${n.date||todayStr()}"></div>
+    <div class="field"><label>Content</label><textarea id="f-content" style="min-height:100px;">${esc(n.content||'')}</textarea></div>
+    <button class="btn btn-primary" onclick="saveNote('${id||''}')">Save note</button>
+  `);
+}
+async function saveNote(id){
+  const data = { title:val('f-title'), category:val('f-category'), date:val('f-date'), content:val('f-content') };
+  if(id){ Object.assign(state.notes.find(n=>n.id===id), data); }
+  else { state.notes.push({id:uid(), ...data}); }
+  await saveState(); closeSheet(); setTab('notes'); showToast('Saved ✓');
+}
+async function deleteNote(id){
+  if(!confirm('Delete this note?')) return;
+  state.notes = state.notes.filter(n=>n.id!==id);
+  await saveState(); render();
+}
+
+/* =========================================================
+   MORE
+   ========================================================= */
+function renderMore(){
+  return `
+  <div class="sec-head"><h2>More</h2></div>
+  <div class="card">
+    <div class="card-title">Trip sections</div>
+    <div class="row" style="cursor:pointer;" onclick="setTab('hotels')"><div class="row-main row-title">🏨 Hotels</div><div>›</div></div>
+    <div class="row" style="cursor:pointer;" onclick="setTab('flights')"><div class="row-main row-title">✈️ Flights</div><div>›</div></div>
+    <div class="row" style="cursor:pointer;" onclick="setTab('car')"><div class="row-main row-title">🚗 Rental Car</div><div>›</div></div>
+    <div class="row" style="cursor:pointer;" onclick="setTab('packing')"><div class="row-main row-title">🧳 Packing List</div><div>›</div></div>
+    <div class="row" style="cursor:pointer;" onclick="setTab('notes')"><div class="row-main row-title">📝 Notes</div><div>›</div></div>
+    <div class="row" style="cursor:pointer;" onclick="setTab('today')"><div class="row-main row-title">🗓️ Today Mode</div><div>›</div></div>
+    <div class="row" style="cursor:pointer;" onclick="openSearch()"><div class="row-main row-title">⌕ Search</div><div>›</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Trip settings</div>
+    <div class="field"><label>Trip name</label><input id="s-name" value="${esc(state.trip.name||'')}"></div>
+    <div class="field-row">
+      <div class="field"><label>Start date</label><input type="date" id="s-start" value="${state.trip.startDate||''}"></div>
+      <div class="field"><label>End date</label><input type="date" id="s-end" value="${state.trip.endDate||''}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Travelers</label><input type="number" id="s-travelers" value="${state.trip.travelers||''}"></div>
+      <div class="field"><label>Budget (AUD)</label><input type="number" id="s-budget" value="${state.trip.budget||''}"></div>
+    </div>
+    <div class="field"><label>Notes</label><textarea id="s-notes">${esc(state.trip.notes||'')}</textarea></div>
+    <button class="btn btn-primary" onclick="saveTripSettings()">Save trip settings</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">What's missing?</div>
+    ${renderWhatsMissing()}
+  </div>
+
+  <div class="card">
+    <div class="card-title">💾 Backup & Data</div>
+    <div class="hint" style="margin-bottom:12px;">Everything you enter is stored only in this browser, on this device — nothing is sent anywhere. Back up often, since clearing your browser's site data would erase it.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <button class="btn btn-ghost btn-block" onclick="exportJSON()">⬇️ Export full trip data (JSON)</button>
+      <button class="btn btn-ghost btn-block" onclick="document.getElementById('import-file').click()">⬆️ Import trip data backup</button>
+      <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importJSON(event)">
+      <button class="btn btn-ghost btn-block" onclick="exportExpensesCSV()">⬇️ Export expenses (CSV)</button>
+      ${state.isDemo ? `<button class="btn btn-rust btn-block" onclick="clearDemoData()">Clear demo data</button>` : ''}
+    </div>
+  </div>
+
+  <div class="card" style="border-color:#e2c3c3;">
+    <div class="card-title" style="color:var(--red);">⚠️ Reset Trip Data</div>
+    <div class="hint" style="margin-bottom:12px;">Permanently deletes everything — itinerary, hotels, bookings, expenses, checklists, packing, notes. Export a backup first if you want to keep a copy.</div>
+    <button class="btn btn-block" style="background:var(--red);color:#fff;" onclick="resetTripData()">Reset trip data</button>
+  </div>
+  `;
+}
+function renderWhatsMissing(){
+  const missing = [];
+  if(!state.trip.startDate || !state.trip.endDate) missing.push('Trip dates');
+  if(!state.flights.length) missing.push('Flight details');
+  if(!state.hotels.length) missing.push('Hotel booking');
+  if(!state.rentalCar || !state.rentalCar.company) missing.push('Rental car details');
+  if(!state.trip.budget) missing.push('Trip budget');
+  if(!state.itineraryDays.length) missing.push('Itinerary days');
+  return missing.length ? missing.map(m=>`<div class="row"><div class="row-main row-title">❓ ${m}</div></div>`).join('') : `<div class="hint">Nothing important is missing 🎉</div>`;
+}
+async function saveTripSettings(){
+  state.trip = { name:val('s-name'), startDate:val('s-start'), endDate:val('s-end'), travelers:val('s-travelers'), budget:val('s-budget'), notes:val('s-notes') };
+  await saveState(); render(); showToast('Trip settings saved ✓');
+}
+async function clearDemoData(){
+  if(!confirm('Remove all sample/demo data? This keeps your own entries.')) return;
+  state.isDemo = false;
+  state.flights = state.flights.filter(f=>!f.demo);
+  state.hotels = state.hotels.filter(h=>!h.demo);
+  state.bookings = state.bookings.filter(b=>!b.demo);
+  state.expenses = state.expenses.filter(e=>!e.demo);
+  state.notes = state.notes.filter(n=>!n.demo);
+  if(state.rentalCar && state.rentalCar.demo) state.rentalCar = {};
+  state.itineraryDays = []; // demo itinerary was sample-only
+  await saveState(); render(); showToast('Demo data cleared ✓');
+}
+
+/* =========================================================
+   IMPORT / EXPORT
+   ========================================================= */
+function downloadFile(filename, content, type){
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+function exportJSON(){
+  downloadFile('melbourne-trip-data.json', JSON.stringify(state, null, 2), 'application/json');
+  showToast('Exported ✓');
+}
+let pendingImport = null;
+function importJSON(evt){
+  const file = evt.target.files[0];
+  evt.target.value = ''; // allow re-selecting the same file later
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    let data;
+    try{ data = JSON.parse(reader.result); }
+    catch(e){ alert('Could not read that file — please check it is a valid Melbourne Trip Planner backup.'); return; }
+    if(!data || typeof data!=='object' || !('trip' in data)){
+      alert('That file doesn\'t look like a Melbourne Trip Planner backup.'); return;
+    }
+    pendingImport = data;
+    showSheet('Import backup', `
+      <div class="hint" style="margin-bottom:14px;">Importing a backup may replace or merge with your existing trip data. Choose how to apply it:</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <button class="btn btn-primary btn-block" onclick="applyImport('replace')">Replace existing data</button>
+        <button class="btn btn-ghost btn-block" onclick="applyImport('merge')">Merge with existing data</button>
+        <button class="btn btn-ghost btn-block" onclick="closeSheet()">Cancel</button>
+      </div>
+      <div class="hint" style="margin-top:12px;">Replace overwrites everything currently in the app with the backup. Merge adds the backup's hotels, flights, bookings, expenses, itinerary days, checklist/packing items and notes alongside what's already here (trip name/dates/budget are only updated if yours are currently blank).</div>
+    `);
+  };
+  reader.readAsText(file);
+}
+async function applyImport(mode){
+  if(!pendingImport) return;
+  const data = pendingImport;
+  if(mode==='replace'){
+    state = data;
+  } else {
+    // merge: append array-based records, fill in blank trip fields, merge checklist/packing sections by name
+    state.flights.push(...(data.flights||[]));
+    state.hotels.push(...(data.hotels||[]));
+    state.bookings.push(...(data.bookings||[]));
+    state.expenses.push(...(data.expenses||[]));
+    state.notes.push(...(data.notes||[]));
+    state.itineraryDays.push(...(data.itineraryDays||[]));
+    if((!state.rentalCar || !state.rentalCar.company) && data.rentalCar) state.rentalCar = data.rentalCar;
+    for(const k in (data.trip||{})){ if(!state.trip[k]) state.trip[k] = data.trip[k]; }
+    for(const sec in (data.checklists||{})){
+      if(!state.checklists[sec]) state.checklists[sec] = [];
+      state.checklists[sec].push(...data.checklists[sec]);
+    }
+    for(const cat in (data.packing||{})){
+      if(!state.packing[cat]) state.packing[cat] = [];
+      state.packing[cat].push(...data.packing[cat]);
+    }
+  }
+  pendingImport = null;
+  await saveState(); closeSheet(); setTab('more'); showToast(mode==='replace' ? 'Backup restored ✓' : 'Backup merged ✓');
+}
+async function resetTripData(){
+  if(!confirm('Are you sure you want to permanently delete all trip data? This cannot be undone.')) return;
+  if(!confirm('Really delete everything — itinerary, hotels, bookings, expenses, checklists, packing, and notes? Consider exporting a backup first.')) return;
+  state = emptyData();
+  await saveState(); render(); showToast('Trip data reset');
+}
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+function openSearch(){
+  showSheet('⌕ Search', `
+    <input id="search-input" placeholder="Search bookings, hotels, expenses, notes…" style="width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:15px;" oninput="runSearch()">
+    <div id="search-results" style="margin-top:14px;"></div>
+  `);
+  setTimeout(()=>document.getElementById('search-input')?.focus(), 50);
+}
+function runSearch(){
+  const q = val('search-input').trim().toLowerCase();
+  const results = [];
+  if(q.length>=1){
+    state.hotels.forEach(h=>{ if(matchAny(h,['name','address','bookingRef'],q)) results.push({ic:'🏨',label:h.name,sub:h.bookingRef||h.address,go:()=>{closeSheet();setTab('hotels');}}); });
+    state.flights.forEach(f=>{ if(matchAny(f,['airline','flightNo','bookingRef'],q)) results.push({ic:'✈️',label:`${f.airline||''} ${f.flightNo||''}`,sub:f.bookingRef,go:()=>{closeSheet();setTab('flights');}}); });
+    if(state.rentalCar && matchAny(state.rentalCar,['company','vehicle','bookingRef'],q)) results.push({ic:'🚗',label:state.rentalCar.company,sub:state.rentalCar.bookingRef,go:()=>{closeSheet();setTab('car');}});
+    state.bookings.forEach(b=>{ if(matchAny(b,['name','bookingNo','confNo','location'],q)) results.push({ic:'🎟️',label:b.name,sub:b.bookingNo,go:()=>{closeSheet();setTab('bookings');}}); });
+    state.expenses.forEach(e=>{ if(matchAny(e,['description','category','location'],q)) results.push({ic:'💰',label:e.description||e.category,sub:fmtMoney(e.amount),go:()=>{closeSheet();setTab('expenses');}}); });
+    state.notes.forEach(n=>{ if(matchAny(n,['title','content'],q)) results.push({ic:'📝',label:n.title,sub:n.category,go:()=>{closeSheet();setTab('notes');}}); });
+    state.itineraryDays.forEach(d=>{ d.items.forEach(i=>{ if(matchAny(i,['activity','location','address'],q)) results.push({ic:'🗓️',label:i.activity,sub:fmtDate(d.date),go:()=>{closeSheet();openDayId=d.id;setTab('itinerary');}}); }); });
+  }
+  const el = document.getElementById('search-results');
+  if(!q) { el.innerHTML=''; return; }
+  el.innerHTML = results.length ? results.map((r,idx)=>`
+    <div class="row" style="cursor:pointer;" onclick="searchResultClick(${idx})"><div class="row-main"><div class="row-title">${r.ic} ${esc(r.label||'')}</div><div class="row-sub">${esc(r.sub||'')}</div></div></div>
+  `).join('') : `<div class="hint">No matches.</div>`;
+  window._searchResults = results;
+}
+function searchResultClick(idx){ window._searchResults[idx].go(); }
+function matchAny(obj, fields, q){
+  return fields.some(f=> (obj[f]||'').toString().toLowerCase().includes(q));
+}
+
+/* =========================================================
+   QUICK ADD
+   ========================================================= */
+function openQuickAdd(){
+  showSheet('Quick Add', `
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button class="btn btn-ghost btn-block" onclick="closeSheet();quickPick('itinerary')">🗓️ Add itinerary item</button>
+      <button class="btn btn-ghost btn-block" onclick="closeSheet();openAddExpense()">💰 Add expense</button>
+      <button class="btn btn-ghost btn-block" onclick="closeSheet();openAddBooking()">🎟️ Add booking</button>
+      <button class="btn btn-ghost btn-block" onclick="closeSheet();openAddHotel()">🏨 Add hotel</button>
+      <button class="btn btn-ghost btn-block" onclick="closeSheet();quickPick('checklist')">☑️ Add checklist item</button>
+      <button class="btn btn-ghost btn-block" onclick="closeSheet();quickPick('packing')">🧳 Add packing item</button>
+      <button class="btn btn-ghost btn-block" onclick="closeSheet();openAddNote()">📝 Add note</button>
+    </div>
+  `);
+}
+function quickPick(kind){
+  if(kind==='itinerary'){
+    if(!state.itineraryDays.length){ setTab('itinerary'); openAddDay(); return; }
+    setTab('itinerary');
+    const sorted = state.itineraryDays.slice().sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+    const today = todayStr();
+    const target = sorted.find(d=>d.date>=today) || sorted[0];
+    openDayId = target.id; render();
+    openAddItem(target.id);
+  } else if(kind==='checklist'){ setTab('checklists'); }
+  else if(kind==='packing'){ setTab('packing'); }
+}
+
+/* =========================================================
+   MODAL / SHEET UTIL
+   ========================================================= */
+function showSheet(title, bodyHtml){
+  document.getElementById('sheet').innerHTML = `
+    <div class="sheet-handle"></div>
+    <div class="sheet-head"><h3>${title}</h3><button class="sheet-close" onclick="closeSheet()">✕</button></div>
+    ${bodyHtml}
+  `;
+  document.getElementById('overlay').classList.add('show');
+}
+function closeSheet(){ document.getElementById('overlay').classList.remove('show'); }
+document.getElementById('overlay').addEventListener('click', (e)=>{ if(e.target.id==='overlay') closeSheet(); });
+function val(id){ const el = document.getElementById(id); return el ? el.value : ''; }
+
+/* =========================================================
+   INIT
+   ========================================================= */
+(async function init(){
+  await loadState();
+  render();
+})();
+</script>
+</body>
+<script>
+// Offline caching (GitHub Pages / hosted use only — never runs for a locally opened file,
+// and never touches localStorage, backup/restore, or CSV export, which are all handled
+// separately above and don't go through the network).
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.protocol === 'http:')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(err => {
+      console.warn('Offline caching unavailable (service worker registration failed):', err);
+    });
+  });
+}
+</script>
+</html>
